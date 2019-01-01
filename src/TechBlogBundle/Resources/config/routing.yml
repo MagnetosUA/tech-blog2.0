@@ -12,6 +12,10 @@ hello_user:
     requirements:
         lastName: '\D+'
 
+name_in_json:
+    path: /name-json
+    defaults: { _controller: TechBlogBundle:Default:getJsonResponse }
+
 tech_blog_invoke:
     path:     /invoke
     defaults: { _controller: TechBlogBundle\Controller\DefaultController }
