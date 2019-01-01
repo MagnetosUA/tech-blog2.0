@@ -6,6 +6,13 @@ show_date:
     path: /date
     defaults: { _controller: TechBlogBundle:Default:showDate }
 
+same_show_date:
+    path: /same-date
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /date
+        permanent: true
+
 hello_user:
     path: /hello/{name}/{lastName}
     defaults: { _controller: TechBlogBundle:Default:helloUser , name: 'Yaml', lastName: 'PHP'}
