@@ -23,6 +23,10 @@ name_in_json:
     path: /name-json
     defaults: { _controller: TechBlogBundle:Default:getJsonResponse }
 
+get_sum_forward:
+    path: /get-sum-forward
+    defaults: { _controller: TechBlogBundle:Default:getSumForward }
+
 tech_blog_invoke:
     path:     /invoke
     defaults: { _controller: TechBlogBundle\Controller\DefaultController }

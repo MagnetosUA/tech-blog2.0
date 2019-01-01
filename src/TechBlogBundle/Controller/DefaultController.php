@@ -50,6 +50,18 @@ class DefaultController extends Controller
     /**
      * @return Response
      */
+    public function getSumForwardAction()
+    {
+        $response = $this->forward('TechBlogBundle:Sum:sum', [
+            'n1' => 7,
+            'n2' => 2,
+        ]);
+        return $response;
+    }
+
+    /**
+     * @return Response
+     */
     public function __invoke()
     {
         return new Response("invoke");
