@@ -2,6 +2,7 @@ tech_blog:
     resource: "@TechBlogBundle/Resources/config/routing.yml"
     prefix:   /
 
-app:
-    resource: '@AppBundle/Controller/'
+sum:
+    resource: "@TechBlogBundle/Controller/SumController.php"
     type: annotation
+    prefix: /prefix
