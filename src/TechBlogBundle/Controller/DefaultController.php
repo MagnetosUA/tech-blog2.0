@@ -33,9 +33,20 @@ class DefaultController extends Controller
 
     public function helloUserAction($name, $lastName)
     {
+        $str = "<div style='color:red;'><i>this is the My string!</i></div>";
+        $list = "in the morning I usually drink water";
+
+        $topics = array(
+//            'topic1' => array('Message 1 of topic 1', 'Message 2 of topic 1'),
+            'topic2' => array('title' => array('Title', 'head' => array('h')), 'title1' => array('Title1', 'head1'))
+        );
+
         return $this->render('@TechBlog/Default/hello_user.html.twig', [
             'name' => $name,
             'last_name' => $lastName,
+            'str' => $str,
+            'list' => $list,
+            'topics' => $topics,
         ]);
     }
 
