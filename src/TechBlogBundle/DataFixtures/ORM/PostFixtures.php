@@ -1,0 +1,26 @@
+<?php
+
+namespace TechBlogBundle\DataFixtures\ORM;
+
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
+use TechBlogBundle\Entity\Post;
+
+class PostFixtures extends Fixture
+{
+    public function load(ObjectManager $manager)
+    {
+        $faker = \Faker\Factory::create();
+        for ($i = 0; $i < 1000; $i++) {
+            $post = new Post();
+            $post->setTitle($faker->title);
+            $post->setArticle($faker->text);
+            $post->setAutor($faker->name);
+            $post->setCategory("All Text");
+            $post->setRating(rand(1, 10));
+            $post->setDatePublication(new \DateTime());
+            $manager->persist($post);
+        }
+        $manager->flush();
+    }
+}
