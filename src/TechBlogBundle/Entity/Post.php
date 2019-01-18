@@ -3,13 +3,14 @@
 namespace TechBlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Post
  * @package TechBlogBundle\Entity
  *
  * @ORM\Table(name="post")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="TechBlogBundle\Repository\PostRepository")
  */
 class Post
 {
@@ -24,6 +25,10 @@ class Post
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(min="3", max="100")
+     *
      */
     private $title;
 
@@ -39,7 +44,7 @@ class Post
     private $datePublication;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor", inversedBy="posts")
      */
     private $autor;
 
@@ -50,6 +55,7 @@ class Post
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
      */
     private $rating;
 
@@ -156,5 +162,4 @@ class Post
     {
         $this->rating = $rating;
     }
-
 }

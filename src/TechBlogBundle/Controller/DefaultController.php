@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use TechBlogBundle\Entity\Post;
 use TechBlogBundle\Services\SqrtProvider;
 
 /**
@@ -25,18 +26,33 @@ class DefaultController extends Controller
 //    {
 //        $this->em = $entityManager;
 //    }
-    public function indexAction($number, EntityManagerInterface $entityManager)
+    public function indexAction($number, EntityManagerInterface $entityManager, Request $request)
     {
-        $qb = $entityManager->createQueryBuilder();
 
-//        echo $qb->getType();die;
-        $em = $qb->getQuery();
+//        $post = $this->getDoctrine()->getRepository(Post::class)->findByExpression($number);
 
+//        phpinfo();die;
+        $request = $request->query->get('param');
+        var_dump($request);die;
+        $post = new Post();
+        $post->setTitle('aya');
 
+        $validator = $this->get('validator');
+        $val = $validator->validate($post);
+
+        if (count($val) > 0) {
+            $errors = (string)$val;
+            $errors = "<pre>".$errors."</pre>";
+            return new Response($errors);
+        }
+        return new Response('No problem !');
+
+//        var_dump($post);
         $sqrtProvider = $this->container->get('sqrt.provider');
         $sqrt = $sqrtProvider->getSqrt($number);
         return $this->render('@TechBlog/Default/index.html.twig', [
             'sqrt' => $sqrt,
+            'post' => $post,
         ]);
     }
 
