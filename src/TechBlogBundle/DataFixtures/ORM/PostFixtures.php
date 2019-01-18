@@ -15,12 +15,22 @@ class PostFixtures extends Fixture
             $post = new Post();
             $post->setTitle($faker->title);
             $post->setArticle($faker->text);
-            $post->setAutor($faker->name);
+
+            $autor = $this->getReference('autor-'.rand(0, 9));
+
+            $post->setAutor($autor);
             $post->setCategory("All Text");
             $post->setRating(rand(1, 10));
             $post->setDatePublication(new \DateTime());
             $manager->persist($post);
         }
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return array(
+            AutorFixtures::class,
+        );
     }
 }

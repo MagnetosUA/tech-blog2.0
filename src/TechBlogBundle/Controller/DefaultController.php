@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use TechBlogBundle\Entity\Autor;
 use TechBlogBundle\Entity\Post;
 use TechBlogBundle\Services\SqrtProvider;
 
@@ -28,14 +29,63 @@ class DefaultController extends Controller
 //    }
     public function indexAction($number, EntityManagerInterface $entityManager, Request $request)
     {
+//        $post = $this->getDoctrine()->getRepository(Post::class)->find($number);
+//        echo $post->getAutor()->getName();
+//        $autor = $post->getAutor();
+//        var_dump(get_class($autor));
+        $post = $this->getDoctrine()->getRepository(Post::class)->getPostJoinWithAutor($number);
+        echo $post->getAutor()->getName();
+        $response = new Response();
+        $response->setContent("<body></body>");
+        return $response;
+        die;
+        $posts = $autor->getPosts();
 
-//        $post = $this->getDoctrine()->getRepository(Post::class)->findByExpression($number);
+
+        $autor = $this->getDoctrine()->getRepository(Autor::class)->find($number);
+        $posts = $autor->getPosts();
+        var_dump($posts->last());die;
+//        $posts->
+        var_dump($posts);
+        foreach ($posts as $post) {
+            echo $post->getArticle()."<hr>";
+        }
+        die;
+
+
+        $autor = new Autor();
+        $autor->setName('78');
+        $autor->setCity(5);
+
+        $post = new Post();
+        $post->setTitle('My postd');
+        $post->setRating(14);
+        $post->setDatePublication(new \DateTime());
+        $post->setCategory("Electro");
+        $post->setArticle("article ofsdd my electro");
+        $post->setAutor($autor);
+
+        $entityManager->persist($autor);
+//        $entityManager->persist($post);
+        $entityManager->flush();
+        $autor = $this->getDoctrine()->getRepository(Autor::class)->find(17);
+
+//        $autor->setPosts($post);
+//        var_dump($autor);die;
+
+//        $posts = $autor->getPosts();
+
+//        echo die;
+//        foreach ($autors as $autor) {
+//            $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['autor' => $autor->getId()]);
+//            $all[] = [$autor, $posts];
+//        }
 
 //        phpinfo();die;
-        $request = $request->query->get('param');
-        var_dump($request);die;
-        $post = new Post();
-        $post->setTitle('aya');
+//        $request = $request->query->get('param');
+//        var_dump($request);die;
+//        $post = new Post();
+//        $post->setTitle('aya');
 
         $validator = $this->get('validator');
         $val = $validator->validate($post);
@@ -52,7 +102,9 @@ class DefaultController extends Controller
         $sqrt = $sqrtProvider->getSqrt($number);
         return $this->render('@TechBlog/Default/index.html.twig', [
             'sqrt' => $sqrt,
-            'post' => $post,
+//            'post' => $post,
+        'autors' => $autors,
+            'all' => $all,
         ]);
     }
 

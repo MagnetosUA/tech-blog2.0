@@ -1,6 +1,11 @@
 Hello World!
 <p>Sqrt = {{ sqrt }}</p>
 
-{% for p in post %}
-    <h2>{{ p.autor }}</h2>
+{% for a in all %}
+
+    {% for p in a[1] %}
+       {{ p.article }}<hr>
+    {% endfor %}
+
+    <h1>{{ a[0].name }}</h1>
 {% endfor %}

@@ -4,6 +4,7 @@ namespace TechBlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Autor
@@ -26,6 +27,7 @@ class Autor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\Length(min="3", max="5")
      */
     private $name;
 
@@ -33,6 +35,7 @@ class Autor
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255)
+     * @Assert\Type("string")
      */
     private $city;
 
@@ -110,20 +113,11 @@ class Autor
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getPosts()
     {
         return $this->posts;
     }
-
-    /**
-     * @param mixed $posts
-     */
-    public function setPosts($posts)
-    {
-        $this->posts = $posts;
-    }
-
 }
 

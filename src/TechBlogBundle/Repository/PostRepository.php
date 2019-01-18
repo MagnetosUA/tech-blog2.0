@@ -2,8 +2,31 @@
 
 namespace TechBlogBundle\Repository;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping;
+
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * PostRepository constructor.
+     * @param EntityManager $em
+     * @param Mapping\ClassMetadata $class
+     */
+    public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
+
+    /**
+     * @param $n
+     * @return array
+     */
     public function findByExpression($n)
     {
         $qb = $this->createQueryBuilder('p');
@@ -22,4 +45,22 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * @param $postId
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getPostJoinWithAutor($postId)
+    {
+        $query = $this->em->createQuery(
+            'SELECT p, a FROM TechBlogBundle:Post p
+                 JOIN p.autor a
+                 WHERE p.id = :id'
+        )
+        ->setParameter('id', $postId);
+
+        return $query->getOneOrNullResult();
+    }
 }
+

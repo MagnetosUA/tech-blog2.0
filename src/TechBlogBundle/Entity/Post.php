@@ -45,6 +45,7 @@ class Post
 
     /**
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor", inversedBy="posts")
+     * @Assert\Valid()
      */
     private $autor;
 
