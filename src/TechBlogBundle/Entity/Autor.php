@@ -27,7 +27,7 @@ class Autor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
-     * @Assert\Length(min="3", max="5")
+     * @Assert\Length(min="3", max="100")
      */
     private $name;
 
@@ -44,6 +44,12 @@ class Autor
      * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="autor")
      */
     private $posts;
+
+    /**
+     * @var
+     * @ORM\Column(type="string")
+     */
+    private $language;
 
     /**
      * Autor constructor.
@@ -119,5 +125,22 @@ class Autor
     {
         return $this->posts;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
 }
 

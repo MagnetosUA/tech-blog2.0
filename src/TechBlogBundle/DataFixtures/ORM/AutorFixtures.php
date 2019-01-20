@@ -15,6 +15,7 @@ class AutorFixtures extends Fixture
             $autor = new Autor();
             $autor->setName($faker->name." ".$faker->lastName);
             $autor->setCity($faker->city);
+            $autor->setLanguage('EN');
 
             $this->addReference('autor-'.$i, $autor);
 

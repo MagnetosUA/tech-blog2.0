@@ -27,7 +27,7 @@ class Post
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Type("string")
-     * @Assert\Length(min="3", max="100")
+     * @Assert\Length(min="2", max="100")
      *
      */
     private $title;
@@ -40,6 +40,9 @@ class Post
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\DateTime()
+     *
      */
     private $datePublication;
 
@@ -57,8 +60,21 @@ class Post
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
+     *
+     * @Assert\Range(
+     *     min=1,
+     *     max=100,
+     *     minMessage="Це не може бути менше 1",
+     *     maxMessage="Дуже багато! Вкажіть менше !"
+     * )
      */
     private $rating;
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $language;
 
     /**
      * @return int
@@ -163,4 +179,21 @@ class Post
     {
         $this->rating = $rating;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
 }

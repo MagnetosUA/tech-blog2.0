@@ -11,7 +11,7 @@ class PostFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create();
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $post = new Post();
             $post->setTitle($faker->title);
             $post->setArticle($faker->text);
@@ -22,6 +22,7 @@ class PostFixtures extends Fixture
             $post->setCategory("All Text");
             $post->setRating(rand(1, 10));
             $post->setDatePublication(new \DateTime());
+            $post->setLanguage('EN');
             $manager->persist($post);
         }
         $manager->flush();
