@@ -23,9 +23,15 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    sqrt.provider:
-        class: TechBlogBundle\Services\SqrtProvider
-        public: true
-        autoconfigure: false
-        autowire: false
+
+    TechBlogBundle\Services\:
+        resource: '../../src/TechBlogBundle/Services'
+#        public: true
+#        tags: ['sqrt.provider']
+
+#    sqrt.provider:
+#        class: TechBlogBundle\Services\SqrtProvider
+#        public: true
+#        autoconfigure: true
+#        autowire: true
 

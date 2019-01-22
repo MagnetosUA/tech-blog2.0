@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -41,110 +42,22 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DefaultController extends Controller
 {
 
-    public function indexAction($number, EntityManagerInterface $entityManager, Request $request)
+    public function indexAction(SqrtProvider $provider)
     {
+        echo $provider->getSqrt(5);die;
 
-//        $autor = new Autor();
-//        $autor->setName('h7788i7');
-//        $autor->setCity(5);
-//        $entityManager->persist($autor);
-//        $entityManager->flush();
-        $autor = $this->getDoctrine()->getRepository(Autor::class)->find(25);
+//        $this->container->au
 
-//        $post = new Post();
-//        $post->setTitle('My postd');
-//        $post->setRating(35);
-//        $post->setDatePublication(new \DateTime());
-//        $post->setCategory("Electro");
-//        $post->setArticle("article ofsdd my electro");
-//        $post->setAutor($autor);
 
-//        $post = new Post();
-//        $autor = new Autor();
+//        $autor = $this->getDoctrine()->getRepository('TechBlogBundle:Autor')->find($autor);
 
-//        $entityManager->persist($autor);
-//        $entityManager->persist($post);
-//        $entityManager->flush();
 
-//        $autor->setPosts($post);
-//        var_dump($autor);die;
+        foreach ($autor->getPosts() as $post) {
 
-//        $posts = $autor->getPosts();
-
-//        echo die;
-//        foreach ($autors as $autor) {
-//            $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(['autor' => $autor->getId()]);
-//            $all[] = [$autor, $posts];
-//        }
-
-//        phpinfo();die;
-//        $request = $request->query->get('param');
-//        var_dump($request);die;
-        $post = $this->getDoctrine()->getRepository(Post::class)->find($number);
-//        $form = $this->createFormBuilder()
-//            ->add('title', TextType::class, [
-//                'required' => true
-//            ])
-//            ->add('rating', RangeType::class)
-//            ->add('datePublication', DateType::class)
-//            ->add('category', TextType::class)
-//            ->add('article')
-//            ->add('int', IntegerType::class)
-//            ->add('currency', MoneyType::class, [
-//                'currency' => 'USD',
-//            ])
-//            ->add('number', NumberType::class)
-//            ->add('percent', PercentType::class)
-//            ->add('search', SearchType::class)
-//            ->add('tel', TelType::class)
-//            ->add('color', ColorType::class)
-//            ->add('country', CountryType::class)
-//            ->add('date_interval', DateIntervalType::class)
-//            ->add('time', TimeType::class)
-//            ->add('birthday', BirthdayType::class)
-//            ->add('autor', EntityType::class, [
-//                'class' => 'TechBlogBundle\Entity\Autor',
-//                'choice_label' => 'name',
-//            ])
-//            ->add('save', SubmitType::class, ['label' => 'Create Task'])
-//            ->getForm();
-        $formAutor = $this->createForm(AutorType::class, $autor);
-        $form = $this->get('form.factory')->createNamed('my_post', PostType::class, $post);
-
-        $form->handleRequest($request);
-//        var_dump($a);die;
-        if ($form->isSubmitted() && $form->isValid()) {
-//            var_dump($form->get('is_unique')->getData());die;
-            $post = $form->getData();
-//            var_dump($post);
-            $entityManager->persist($post);
-            $entityManager->flush();
-            $route = $this->generateUrl('tech_blog_homepage', [
-                'number' => $post->getId(),
-            ]);
-            $route = $request->getUri();
-            return $this->redirect($route);
         }
-//        $post = new Post();
-//        $post->setTitle('aya');
-//
-//        $validator = $this->get('validator');
-//        $val = $validator->validate($post);
-//
-//        if (count($val) > 0) {
-//            $errors = (string)$val;
-//            $errors = "<pre>".$errors."</pre>";
-//            return new Response($errors);
-//        }
-//        return new Response('No problem !');
 
-//        var_dump($post);
-        $sqrtProvider = $this->container->get('sqrt.provider');
-        $sqrt = $sqrtProvider->getSqrt($number);
         return $this->render('@TechBlog/Default/index.html.twig', [
-            'sqrt' => $sqrt,
-            'form' => $form->createView(),
-            'form_autor' => $formAutor->createView(),
+            'autor' => $autor,
         ]);
     }
 

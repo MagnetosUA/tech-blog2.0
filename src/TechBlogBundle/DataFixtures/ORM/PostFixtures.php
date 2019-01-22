@@ -21,7 +21,6 @@ class PostFixtures extends Fixture
             $post->setAutor($autor);
             $post->setCategory("All Text");
             $post->setRating(rand(1, 10));
-            $post->setDatePublication(new \DateTime());
             $post->setLanguage('EN');
             $manager->persist($post);
         }

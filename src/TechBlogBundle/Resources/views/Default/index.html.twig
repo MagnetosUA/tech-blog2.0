@@ -1,6 +1,6 @@
 Hello World!
 <body></body>
-<p>Sqrt = {{ sqrt }}</p>
+{#<p>Sqrt = {{ sqrt }}</p>#}
 
 {#{% for a in all %}#}
 
@@ -11,16 +11,21 @@ Hello World!
     {#<h1>{{ a[0].name }}</h1>#}
 {#{% endfor %}#}
 
-<div>
-    <h3>Post Data</h3>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-</div>
+{#<div>#}
+    {#<h3>Post Data</h3>#}
+    {#{{ form_start(form) }}#}
+    {#{{ form_widget(form) }}#}
+    {#{{ form_end(form) }}#}
+{#</div>#}
 
 
-<div>
-    <h3>Autor Data</h3>
-    {{ form_start(form_autor) }}
-    {{ form_end(form_autor) }}
-</div>
+{#<div>#}
+    {#<h3>Autor Data</h3>#}
+    {#{{ form_start(form_autor) }}#}
+    {#{{ form_end(form_autor) }}#}
+{#</div>#}
+{% for post in autor.posts %}
+    <dt>Recent Notes</dt>
+    <dd>{{ post.createdAt|date }}</dd>
+{% endfor %}
+

@@ -39,12 +39,11 @@ class Post
     private $article;
 
     /**
+     * @var
      * @ORM\Column(type="datetime")
-     *
      * @Assert\DateTime()
-     *
      */
-    private $datePublication;
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor", inversedBy="posts")
@@ -75,6 +74,11 @@ class Post
      * @ORM\Column(type="string")
      */
     private $language;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * @return int
@@ -119,17 +123,9 @@ class Post
     /**
      * @return mixed
      */
-    public function getDatePublication()
+    public function getCreatedAt()
     {
-        return $this->datePublication;
-    }
-
-    /**
-     * @param mixed $datePublication
-     */
-    public function setDatePublication($datePublication)
-    {
-        $this->datePublication = $datePublication;
+        return $this->createdAt;
     }
 
     /**

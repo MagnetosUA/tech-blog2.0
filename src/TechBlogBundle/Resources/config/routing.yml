@@ -1,6 +1,6 @@
 tech_blog_homepage:
-    path:     /{number}
-    defaults: { _controller: TechBlogBundle:Default:index, number: 2 }
+    path:     /{id}
+    defaults: { _controller: TechBlogBundle:Default:index, id: 1035 }
 
 show_date:
     path: /date

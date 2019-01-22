@@ -40,8 +40,8 @@ class Autor
     private $city;
 
     /**
-     *
      * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="autor")
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $posts;
 
@@ -119,7 +119,7 @@ class Autor
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Post
      */
     public function getPosts()
     {
