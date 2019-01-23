@@ -40,7 +40,7 @@ class Autor
     private $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="autor")
+     * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="autor", orphanRemoval=true)
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $posts;
@@ -57,6 +57,8 @@ class Autor
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+
+//        $this->id = Autor::new();
     }
 
 
@@ -123,7 +125,20 @@ class Autor
      */
     public function getPosts()
     {
-        return $this->posts;
+        return $this->posts->toArray();
+    }
+
+    /**
+     * @param Post $post
+     */
+    public function setPosts(?Post $post)
+    {
+        $this->posts->t = $post;
+    }
+
+    public function removePost($post)
+    {
+        $this->posts->remove($post);
     }
 
     /**

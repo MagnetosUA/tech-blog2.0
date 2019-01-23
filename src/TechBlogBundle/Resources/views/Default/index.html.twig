@@ -24,8 +24,5 @@ Hello World!
     {#{{ form_start(form_autor) }}#}
     {#{{ form_end(form_autor) }}#}
 {#</div>#}
-{% for post in autor.posts %}
-    <dt>Recent Notes</dt>
-    <dd>{{ post.createdAt|date }}</dd>
-{% endfor %}
-
+{{ form_start(form) }}
+{{ form_end(form) }}

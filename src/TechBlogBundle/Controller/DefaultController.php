@@ -42,14 +42,35 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DefaultController extends Controller
 {
 
-    public function indexAction(SqrtProvider $provider)
+    public function indexAction(Autor $autor, Request $request)
     {
-        echo $provider->getSqrt(5);die;
 
-//        $this->container->au
-
-
+//        echo $provider->getSqrt(5);die;
 //        $autor = $this->getDoctrine()->getRepository('TechBlogBundle:Autor')->find($autor);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $a = $em->find('TechBlogBundle:Autor', $autor);
+//        var_dump($a);die;
+
+        $em->remove($a);
+        $em->flush();
+        die;
+//        $a;
+        $autor = new Autor();
+        $form = $this->createForm('TechBlogBundle\Form\AutorType', $autor);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $autor = $form->getData();
+
+            $em->persist($autor);
+            $em->flush();
+
+            return $this->redirect($request->getUri());
+        }
 
 
         foreach ($autor->getPosts() as $post) {
@@ -57,7 +78,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('@TechBlog/Default/index.html.twig', [
-            'autor' => $autor,
+            'form' => $form->createView(),
         ]);
     }
 
