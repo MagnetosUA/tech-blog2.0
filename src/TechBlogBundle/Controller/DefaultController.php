@@ -42,13 +42,39 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DefaultController extends Controller
 {
 
-    public function indexAction(Autor $autor, Request $request)
+    public function indexAction(Request $request)
     {
+        $token = $this->container->get('security.token_storage')->getToken();
+        var_dump($token);
+//        echo $token->getUser();
+        $token->setUser();
+
+        echo $token->getUser() === $this->getUser();die;
+
+        var_dump($this->getUser());die;
+        $autor = new Autor();
+        $autor->setName('alx2k2');
+        $autor->setCity('sss2');
+        $autor->setLanguage('ru2');
+
+        $post = new Post();
+        $post->setTitle('prodigy of the land');
+//        $post->setAutor($autor);
+        $post->setArticle('ssssssssrrrrrrrr');
+        $post->setCategory('s');
+        $post->setLanguage('ru');
+        $post->setRating(10);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($autor);
+        $em->persist($post);
+        $em->flush();
+        echo $post->getSlug();die;
 
 //        echo $provider->getSqrt(5);die;
 //        $autor = $this->getDoctrine()->getRepository('TechBlogBundle:Autor')->find($autor);
 
-        $em = $this->getDoctrine()->getManager();
+
 
         $a = $em->find('TechBlogBundle:Autor', $autor);
 //        var_dump($a);die;

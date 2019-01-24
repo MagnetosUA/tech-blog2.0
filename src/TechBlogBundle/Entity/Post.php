@@ -4,6 +4,7 @@ namespace TechBlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Post
@@ -39,15 +40,18 @@ class Post
     private $article;
 
     /**
-     * @var
+     * @var \DateTime $createdAt
      * @ORM\Column(type="datetime")
      * @Assert\DateTime()
+     * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
 
     /**
+     * @var Autor $autor
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor", inversedBy="posts")
      * @Assert\Valid()
+     * @Gedmo\Blameable(on="create")
      */
     private $autor;
 
@@ -69,16 +73,22 @@ class Post
      */
     private $rating;
 
+    /**
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
 
     /**
      * @ORM\Column(type="string")
      */
     private $language;
 
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-    }
+//    public function __construct()
+//    {
+//        $this->createdAt = new \DateTime();
+//    }
 
     /**
      * @return int
@@ -190,6 +200,14 @@ class Post
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
 }

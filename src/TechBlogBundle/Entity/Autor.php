@@ -133,7 +133,7 @@ class Autor
      */
     public function setPosts(?Post $post)
     {
-        $this->posts->t = $post;
+        $this->posts[] = $post;
     }
 
     public function removePost($post)
