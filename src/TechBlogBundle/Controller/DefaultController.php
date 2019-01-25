@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use TechBlogBundle\Entity\Autor;
+use TechBlogBundle\Entity\Category;
 use TechBlogBundle\Entity\Post;
 use TechBlogBundle\Form\AutorType;
 use TechBlogBundle\Form\PostType;
@@ -42,24 +43,60 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DefaultController extends Controller
 {
 
+    private function goodPrintR($array)
+    {
+        echo "<h3>New----------Print-----------End</h3>";
+        echo "<pre>";
+        print_r($array);
+        echo "</pre>";
+    }
+
     public function indexAction(Request $request)
     {
-        $token = $this->container->get('security.token_storage')->getToken();
-//        var_dump($token);
-//        echo $token->getUser();
-
         $em = $this->getDoctrine()->getManager();
         $user = $em->find('TechBlogBundle:Autor', 15);
+
+        $science = new Category();
+        $science->setTitle('Science');
+
+        $biology = new Category();
+        $biology->setParent($science);
+        $biology->setTitle('Biology');
+
+        $cytology = new Category();
+        $cytology->setTitle('Cytology');
+        $cytology->setParent($biology);
+
+        $em->persist($science);
+        $em->persist($biology);
+        $em->persist($cytology);
+        $em->flush();
+
+        $repo = $em->getRepository('TechBlogBundle:Category');
+        $science1 = $repo->findOneByTitle('Science');
+//        var_dump($science1);
+        echo $repo->childCount($science1);
+
+        $path = $repo->getPath($biology);
+
+        $this->goodPrintR($path);
+
+        echo $repo->verify();
+        echo $repo->recover();
+
+        $em->remove($science);
+        $em->remove($biology);
+        $em->remove($cytology);
+        $em->flush();
+
+
+        die;
+
+
+
 //        $post = $em->find('TechBlogBundle:Post', $post);
 //        $post->setArticle('nirvanaaaaaa');
-        $token->setUser($user);
-        $token->setAuthenticated(true);
-        $isAuth = $token->isAuthenticated();
-        var_dump($isAuth);
 
-//        echo $this->getUser();die;
-
-//        var_dump($this->getUser());die;
 //        $autor = new Autor();
 //        $autor->setName('alx2k2');
 //        $autor->setCity('sss2');
@@ -80,20 +117,9 @@ class DefaultController extends Controller
         echo $post->getSlug();
         return new Response('<body><p>response</p></body>');
 
-//        echo $provider->getSqrt(5);die;
-//        $autor = $this->getDoctrine()->getRepository('TechBlogBundle:Autor')->find($autor);
-
-
-
-        $a = $em->find('TechBlogBundle:Autor', $autor);
-//        var_dump($a);die;
-
-        $em->remove($a);
-        $em->flush();
-        die;
-//        $a;
-        $autor = new Autor();
-        $form = $this->createForm('TechBlogBundle\Form\AutorType', $autor);
+//
+//
+//        $form = $this->createForm('TechBlogBundle\Form\AutorType', $user);
 
         $form->handleRequest($request);
 
