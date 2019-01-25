@@ -45,31 +45,40 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $token = $this->container->get('security.token_storage')->getToken();
-        var_dump($token);
+//        var_dump($token);
 //        echo $token->getUser();
-        $token->setUser();
 
-        echo $token->getUser() === $this->getUser();die;
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->find('TechBlogBundle:Autor', 15);
+//        $post = $em->find('TechBlogBundle:Post', $post);
+//        $post->setArticle('nirvanaaaaaa');
+        $token->setUser($user);
+        $token->setAuthenticated(true);
+        $isAuth = $token->isAuthenticated();
+        var_dump($isAuth);
 
-        var_dump($this->getUser());die;
-        $autor = new Autor();
-        $autor->setName('alx2k2');
-        $autor->setCity('sss2');
-        $autor->setLanguage('ru2');
+//        echo $this->getUser();die;
+
+//        var_dump($this->getUser());die;
+//        $autor = new Autor();
+//        $autor->setName('alx2k2');
+//        $autor->setCity('sss2');
+//        $autor->setLanguage('ru2');
 
         $post = new Post();
-        $post->setTitle('prodigy of the land');
-//        $post->setAutor($autor);
-        $post->setArticle('ssssssssrrrrrrrr');
-        $post->setCategory('s');
-        $post->setLanguage('ru');
+        $post->setTitle('AC/DC');
+//        $post->setAutor($user);
+        $post->setArticle('Australia');
+        $post->setCategory('Music');
+        $post->setLanguage('Rock');
         $post->setRating(10);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($autor);
+//        $em->persist($autor);
         $em->persist($post);
         $em->flush();
-        echo $post->getSlug();die;
+        echo $post->getSlug();
+        return new Response('<body><p>response</p></body>');
 
 //        echo $provider->getSqrt(5);die;
 //        $autor = $this->getDoctrine()->getRepository('TechBlogBundle:Autor')->find($autor);

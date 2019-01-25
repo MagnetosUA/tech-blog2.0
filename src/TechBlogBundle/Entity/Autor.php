@@ -157,5 +157,9 @@ class Autor
         $this->language = $language;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
 

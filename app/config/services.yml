@@ -26,8 +26,12 @@ services:
 
     TechBlogBundle\Services\:
         resource: '../../src/TechBlogBundle/Services'
+#
+#    TechBlogBundle\EventListener\NameFixer:
+#        tags:
+#            - { name: doctrine.event_listener, event: postPersist }
 
-    TechBlogBundle\EventListener\NameFixer:
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
+#    Gedmo\Blameable\BlameableListener:
+#        tags:
+#            - { name: doctrine.event_listener, event: prePersist }
 
