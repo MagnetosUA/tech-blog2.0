@@ -52,11 +52,17 @@ class Autor
     private $language;
 
     /**
+     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor")
+     */
+    private $referers;
+
+    /**
      * Autor constructor.
      */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->referers = new ArrayCollection();
 
 //        $this->id = Autor::new();
     }
@@ -155,6 +161,33 @@ class Autor
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReferers(): ArrayCollection
+    {
+        return $this->referers;
+    }
+
+    /**
+     * @param Autor $autor
+     */
+    public function addReferer(Autor $autor): void
+    {
+        $this->referers[] = $autor;
+    }
+
+    /**
+     * @param Autor $referer
+     * @return $this
+     */
+    public function removeReferer(Autor $referer)
+    {
+        $this->referers->remove($referer);
+        /*I don't know if that is  need*/
+        return $this;
     }
 
     public function __toString()
