@@ -51,26 +51,22 @@ class DefaultController extends Controller
         echo "</pre>";
     }
 
-    public function indexAction(Request $request)
+    public function indexAction(Autor $autor, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->find('TechBlogBundle:Autor', 15);
+        $user = $em->find('TechBlogBundle:Autor', 9);
+//        $refs = $user->getReferers();
+//        foreach ($refs as $ref) {
+//            echo $ref->getName()."<br>";
+//        }die;
+        $user->addReferer($autor);
+        $post = $em->find('TechBlogBundle:Post', 77);
 
-        $science = new Category();
-        $science->setTitle('Science');
-
-        $biology = new Category();
-        $biology->setParent($science);
-        $biology->setTitle('Biology');
-
-        $cytology = new Category();
-        $cytology->setTitle('Cytology');
-        $cytology->setParent($biology);
-
-        $em->persist($science);
-        $em->persist($biology);
-        $em->persist($cytology);
-        $em->flush();
+//        $em->remove($post);
+        $em->persist($user);
+        $u = $em->getUnitOfWork()->size();
+        var_dump($u);
+        $em->flush();die;
 
         $repo = $em->getRepository('TechBlogBundle:Category');
         $science1 = $repo->findOneByTitle('Science');

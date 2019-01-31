@@ -49,7 +49,7 @@ class Post
 
     /**
      * @var Autor $autor
-     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor", inversedBy="posts", cascade={"remove"})
      * @Assert\Valid()
      * @Gedmo\Blameable(on="create")
      *

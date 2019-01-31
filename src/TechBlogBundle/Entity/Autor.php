@@ -52,7 +52,11 @@ class Autor
     private $language;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor")
+     * @ORM\ManyToMany(targetEntity="TechBlogBundle\Entity\Autor")
+     * @ORM\JoinTable(name="referers",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="referer_id", referencedColumnName="id", unique=true)}
+     *     )
      */
     private $referers;
 
@@ -164,30 +168,19 @@ class Autor
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Autor[]
      */
-    public function getReferers(): ArrayCollection
+    public function getReferers()
     {
         return $this->referers;
     }
 
     /**
-     * @param Autor $autor
-     */
-    public function addReferer(Autor $autor): void
-    {
-        $this->referers[] = $autor;
-    }
-
-    /**
      * @param Autor $referer
-     * @return $this
      */
-    public function removeReferer(Autor $referer)
+    public function addReferer(Autor $referer)
     {
-        $this->referers->remove($referer);
-        /*I don't know if that is  need*/
-        return $this;
+        $this->referers->add($referer);
     }
 
     public function __toString()
