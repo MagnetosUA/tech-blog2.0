@@ -58,6 +58,7 @@ class Post
 
     /**
      * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Category", inversedBy="")
      */
     private $category;
 

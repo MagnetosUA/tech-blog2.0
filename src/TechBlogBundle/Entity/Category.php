@@ -2,6 +2,8 @@
 
 namespace TechBlogBundle\Entity;
 
+use ClassesWithParents\A;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -24,6 +26,11 @@ class Category
      * @ORM\Column(name="title", type="string", length=64)
      */
     private $title;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="category", orphanRemoval=true)
+     */
+    private $posts;
 
     /**
      * @Gedmo\TreeLeft
@@ -62,6 +69,14 @@ class Category
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
+
+    /**
+     * Category constructor.
+     */
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -109,5 +124,26 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPosts(): ArrayCollection
+    {
+        return $this->posts;
+    }
+
+    /**
+     * @param Post $post
+     */
+    public function setPosts(Post $post): void
+    {
+        $this->posts->add($post);
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }
