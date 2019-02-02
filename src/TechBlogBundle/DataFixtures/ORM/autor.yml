@@ -1,5 +1,5 @@
 TechBlogBundle\Entity\Autor:
-  autor{1..100000}:
-    name: <name()>
-    city: <city()>
+  autor{1..10}:
+    name: '<name()>'
+    city: '<city()>'
     language: 'en'

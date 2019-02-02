@@ -51,16 +51,17 @@ class DefaultController extends Controller
         echo "</pre>";
     }
 
-    public function indexAction(Autor $autor, Request $request)
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->find('TechBlogBundle:Autor', 9);
+//        $user = $em->find('TechBlogBundle:Autor', 9);
 //        $refs = $user->getReferers();
 //        foreach ($refs as $ref) {
 //            echo $ref->getName()."<br>";
 //        }die;
-        $user->addReferer($autor);
-        $post = $em->find('TechBlogBundle:Post', 77);
+//        $user->addReferer($autor);
+        $post = $em->find('TechBlogBundle:Post', 63);
+        var_dump($post->getCategory());die;
 
 //        $em->remove($post);
         $em->persist($user);

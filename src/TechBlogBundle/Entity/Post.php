@@ -57,8 +57,7 @@ class Post
     private $autor;
 
     /**
-     * @ORM\Column(type="string")
-     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Category", inversedBy="")
+     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Category", inversedBy="posts")
      */
     private $category;
 
@@ -165,9 +164,9 @@ class Post
     }
 
     /**
-     * @param mixed $category
+     * @param Category $category
      */
-    public function setCategory($category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
     }

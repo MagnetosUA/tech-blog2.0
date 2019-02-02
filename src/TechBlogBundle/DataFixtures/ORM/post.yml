@@ -1,0 +1,8 @@
+TechBlogBundle\Entity\Post:
+  post{1..5}:
+    title: '<word()>'
+    article: '<realText($maxNbChars = 200, $indexSize = 2)>'
+    autor: '@autor<numberBetween(1, 10)>'
+    category: '@category<numberBetween(1, 100)>'
+    rating: '<randomDigitNotNull()>'
+    language: '<languageCode()>'
