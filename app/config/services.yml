@@ -15,7 +15,7 @@ services:
         public: false
 
     TechBlogBundle\DataFixtures\:
-        resource: '../../src/TechBlogBundle/DataFixtures'
+        resource: '../../src/TechBlogBundle/DataFixtures/ORM'
         tags: ['doctrine.fixture.orm']
 
     TechBlogBundle\Controller\:
@@ -34,4 +34,5 @@ services:
 #    Gedmo\Blameable\BlameableListener:
 #        tags:
 #            - { name: doctrine.event_listener, event: prePersist }
+
 
