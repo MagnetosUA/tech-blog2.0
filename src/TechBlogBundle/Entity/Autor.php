@@ -40,7 +40,7 @@ class Autor
     private $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="autor", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="autor", orphanRemoval=true, fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $posts;
@@ -131,24 +131,29 @@ class Autor
     }
 
     /**
-     * @return ArrayCollection|Post
+     * @return ArrayCollection|Post[]
      */
     public function getPosts()
     {
-        return $this->posts->toArray();
+        return $this->posts;
     }
 
     /**
      * @param Post $post
      */
-    public function setPosts(?Post $post)
+    public function addPost(?Post $post)
     {
         $this->posts[] = $post;
+        $post->setAutor($this);
     }
 
-    public function removePost($post)
+    /**
+     * @param Post $post
+     */
+    public function removePost(Post $post)
     {
-        $this->posts->remove($post);
+        $this->posts->removeElement($post);
+
     }
 
     /**

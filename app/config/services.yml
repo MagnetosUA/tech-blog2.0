@@ -26,10 +26,10 @@ services:
 
     TechBlogBundle\Services\:
         resource: '../../src/TechBlogBundle/Services'
-#
-#    TechBlogBundle\EventListener\NameFixer:
-#        tags:
-#            - { name: doctrine.event_listener, event: postPersist }
+
+    TechBlogBundle\EventListener\MyTemplateNameFixer:
+        tags:
+            - { name: kernel.event_subscriber, event: kernel.controller }
 
 #    Gedmo\Blameable\BlameableListener:
 #        tags:

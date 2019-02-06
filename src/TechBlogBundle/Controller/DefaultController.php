@@ -5,6 +5,8 @@ namespace TechBlogBundle\Controller;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -51,93 +53,12 @@ class DefaultController extends Controller
         echo "</pre>";
     }
 
-    public function indexAction(Request $request)
+    /**
+     * @Template(vars={"post"})
+     * @ParamConverter("post", class="TechBlogBundle:Post")
+     */
+    public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-//        $user = $em->find('TechBlogBundle:Autor', 9);
-//        $refs = $user->getReferers();
-//        foreach ($refs as $ref) {
-//            echo $ref->getName()."<br>";
-//        }die;
-//        $user->addReferer($autor);
-        $post = $em->find('TechBlogBundle:Post', 63);
-        var_dump($post->getCategory());die;
-
-//        $em->remove($post);
-        $em->persist($user);
-        $u = $em->getUnitOfWork()->size();
-        var_dump($u);
-        $em->flush();die;
-
-        $repo = $em->getRepository('TechBlogBundle:Category');
-        $science1 = $repo->findOneByTitle('Science');
-//        var_dump($science1);
-        echo $repo->childCount($science1);
-
-        $path = $repo->getPath($biology);
-
-        $this->goodPrintR($path);
-
-        echo $repo->verify();
-        echo $repo->recover();
-
-        $em->remove($science);
-        $em->remove($biology);
-        $em->remove($cytology);
-        $em->flush();
-
-
-        die;
-
-
-
-//        $post = $em->find('TechBlogBundle:Post', $post);
-//        $post->setArticle('nirvanaaaaaa');
-
-//        $autor = new Autor();
-//        $autor->setName('alx2k2');
-//        $autor->setCity('sss2');
-//        $autor->setLanguage('ru2');
-
-        $post = new Post();
-        $post->setTitle('AC/DC');
-//        $post->setAutor($user);
-        $post->setArticle('Australia');
-        $post->setCategory('Music');
-        $post->setLanguage('Rock');
-        $post->setRating(10);
-
-        $em = $this->getDoctrine()->getManager();
-//        $em->persist($autor);
-        $em->persist($post);
-        $em->flush();
-        echo $post->getSlug();
-        return new Response('<body><p>response</p></body>');
-
-//
-//
-//        $form = $this->createForm('TechBlogBundle\Form\AutorType', $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $autor = $form->getData();
-
-            $em->persist($autor);
-            $em->flush();
-
-            return $this->redirect($request->getUri());
-        }
-
-
-        foreach ($autor->getPosts() as $post) {
-
-        }
-
-        return $this->render('@TechBlog/Default/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     /**

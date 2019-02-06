@@ -1,28 +1,7 @@
 Hello World!
-<body></body>
-{#<p>Sqrt = {{ sqrt }}</p>#}
+{#<body></body>#}
 
-{#{% for a in all %}#}
-
-    {#{% for p in a[1] %}#}
-       {#{{ p.article }}<hr>#}
-    {#{% endfor %}#}
-
-    {#<h1>{{ a[0].name }}</h1>#}
-{#{% endfor %}#}
-
-{#<div>#}
-    {#<h3>Post Data</h3>#}
-    {#{{ form_start(form) }}#}
-    {#{{ form_widget(form) }}#}
-    {#{{ form_end(form) }}#}
-{#</div>#}
-
-
-{#<div>#}
-    {#<h3>Autor Data</h3>#}
-    {#{{ form_start(form_autor) }}#}
-    {#{{ form_end(form_autor) }}#}
-{#</div>#}
-{{ form_start(form) }}
-{{ form_end(form) }}
+{{ post.createdAt|date }}
+<body>
+<h1>it works;)</h1>
+</body>

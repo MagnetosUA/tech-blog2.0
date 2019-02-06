@@ -81,6 +81,8 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+   view:
+        annotations: true
 
 stof_doctrine_extensions:
     default_locale: en_US

@@ -6,3 +6,6 @@ sum:
     resource: "@TechBlogBundle/Controller/SumController.php"
     type: annotation
     prefix: /prefix
+
+logout:
+    path: /logout
