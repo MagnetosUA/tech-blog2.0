@@ -3,6 +3,7 @@
 namespace TechBlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DefaultController
@@ -20,13 +21,22 @@ class DefaultController extends Controller
     }
 
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $posts = $this->getDoctrine()->getRepository('TechBlogBundle:Post')->findAll();
+        $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $postsRepository->findAllQuery(), /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+
         return $this->render('@TechBlog/Default/index.html.twig', [
-            'posts' => $posts,
+            'posts' => $pagination
         ]);
     }
 
-
 }
+

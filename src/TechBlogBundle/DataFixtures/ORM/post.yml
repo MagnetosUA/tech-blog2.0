@@ -1,5 +1,5 @@
 TechBlogBundle\Entity\Post:
-  post{1..30}:
+  post{1..1000}:
     title: '<sentence()>'
     article: '<realText($maxNbChars = 500, $indexSize = 2)>'
     author: '@author*'

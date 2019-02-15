@@ -23,6 +23,12 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         $this->em = $em;
     }
 
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery();
+    }
     /**
      * @param $n
      * @return array
