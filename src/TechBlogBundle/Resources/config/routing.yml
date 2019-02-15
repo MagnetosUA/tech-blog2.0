@@ -1,34 +1,5 @@
 tech_blog_homepage:
-    path:     /{id}
-    defaults: { _controller: TechBlogBundle:Default:index, id: 1035 }
-    requirements:
-        id: '\d+'
+    path:     /
+    defaults: { _controller: TechBlogBundle:Default:index }
 
-show_date:
-    path: /date
-    defaults: { _controller: TechBlogBundle:Default:showDate }
 
-same_show_date:
-    path: /same-date
-    defaults:
-        _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /date
-        permanent: true
-
-hello_user:
-    path: /hello/{name}/{lastName}
-    defaults: { _controller: TechBlogBundle:Default:helloUser , name: 'Yaml', lastName: 'PHP'}
-    requirements:
-        lastName: '\D+'
-
-name_in_json:
-    path: /name-json
-    defaults: { _controller: TechBlogBundle:Default:getJsonResponse }
-
-get_sum_forward:
-    path: /get-sum-forward
-    defaults: { _controller: TechBlogBundle:Default:getSumForward }
-
-tech_blog_invoke:
-    path:     /invoke
-    defaults: { _controller: TechBlogBundle\Controller\DefaultController }

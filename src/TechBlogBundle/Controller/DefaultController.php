@@ -22,8 +22,9 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
+        $posts = $this->getDoctrine()->getRepository('TechBlogBundle:Post')->findAll();
         return $this->render('@TechBlog/Default/index.html.twig', [
-
+            'posts' => $posts,
         ]);
     }
 

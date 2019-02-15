@@ -33,7 +33,7 @@ class Post
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      * @Assert\Type("string")
      * @Assert\Length(min="100")

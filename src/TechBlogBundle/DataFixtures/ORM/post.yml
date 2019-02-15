@@ -1,8 +1,7 @@
 TechBlogBundle\Entity\Post:
   post{1..30}:
     title: '<sentence()>'
-    article: '<realText($maxNbChars = 200, $indexSize = 2)>'
+    article: '<realText($maxNbChars = 500, $indexSize = 2)>'
     author: '@author*'
     category: '@category*'
-#    tags: '@tag*'
     tags: '<numberBetween(1, 10)>x @tag*'
