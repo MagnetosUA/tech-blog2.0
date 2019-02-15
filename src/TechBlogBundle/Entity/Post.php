@@ -2,6 +2,7 @@
 
 namespace TechBlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -16,7 +17,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Post
 {
     /**
-     * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,37 +24,42 @@ class Post
     private $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Type("string")
      * @Assert\Length(min="2", max="100")
-     *
      */
     private $title;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(min="100")
      */
     private $article;
 
     /**
-     * @var \DateTime $createdAt
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
 
     /**
-     * @var Author $autor
-     * @ORM\ManyToOne(targetEntity="Author.php", inversedBy="posts", cascade={"remove"})
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updatedAt;
+
+    /**
+     * @var Author $author
+     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Author", inversedBy="posts", cascade={"remove"})
      * @Assert\Valid()
      * @Gedmo\Blameable(on="create")
      *
      */
-    private $autor;
+    private $author;
 
     /**
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Category", inversedBy="posts")
@@ -62,34 +67,27 @@ class Post
     private $category;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank
-     *
-     * @Assert\Range(
-     *     min=1,
-     *     max=100,
-     *     minMessage="Це не може бути менше 1",
-     *     maxMessage="Дуже багато! Вкажіть менше !"
-     * )
-     */
-    private $rating;
-
-    /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(length=128, unique=true)
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="TechBlogBundle\Entity\Author", inversedBy="likes")
+     */
+    private $likes;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToMany(targetEntity="TechBlogBundle\Entity\Tag", inversedBy="posts")
      */
-    private $language;
+    private $tags;
 
-//    public function __construct()
-//    {
-//        $this->createdAt = new \DateTime();
-//    }
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -144,21 +142,21 @@ class Post
      */
     public function getAutor()
     {
-        return $this->autor;
+        return $this->author;
     }
 
     /**
-     * @param mixed $autor
+     * @param Author $author
      */
-    public function setAutor($autor)
+    public function setAuthor(Author $author)
     {
-        $this->autor = $autor;
+        $this->author = $author;
     }
 
     /**
-     * @return mixed
+     * @return Category
      */
-    public function getCategory()
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -174,41 +172,50 @@ class Post
     /**
      * @return mixed
      */
-    public function getRating()
-    {
-        return $this->rating;
-    }
-
-    /**
-     * @param mixed $rating
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param mixed $language
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getSlug()
     {
         return $this->slug;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikes()
+    {
+        return $this->likes->count();
+    }
+
+    /**
+     * @param Author $author
+     */
+    public function setLikes(Author $author): void
+    {
+        $this->likes->add($author);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param mixed $tags
+     */
+    public function addTag($tag): void
+    {
+        $this->tags->add($tag);
+    }
+
 }
+
