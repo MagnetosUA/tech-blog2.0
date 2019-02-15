@@ -30,6 +30,9 @@ class Tag
      */
     private $posts;
 
+    /**
+     * Tag constructor.
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -71,13 +74,11 @@ class Tag
 
     /**
      * @param Post $post
-     * @return $this
+
      */
     public function addPost(Post $post)
     {
         $this->posts->add($post);
-
-        return $this;
     }
 
     /**

@@ -139,9 +139,9 @@ class Post
     }
 
     /**
-     * @return mixed
+     * @return Author
      */
-    public function getAutor()
+    public function getAuthor()
     {
         return $this->author;
     }
@@ -211,12 +211,11 @@ class Post
     }
 
     /**
-     * @param mixed $tags
+     * @param Tag $tag
      */
-    public function addTag($tag): void
+    public function addTag(Tag $tag): void
     {
         $this->tags->add($tag);
     }
-
 }
 
