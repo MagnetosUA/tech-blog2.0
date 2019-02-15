@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -59,6 +60,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+//        $token = $this->get('security.token_storage');
+//        $token->setToken(null);
+        $this->getDoctrine()->getRepository('TechBlogBundle:Post');
+        $u = $this->getUser();
     }
 
     /**
@@ -66,6 +71,10 @@ class DefaultController extends Controller
      */
     public function showDateAction()
     {
+        echo strtr('abstract', 'abc', 'xyc');
+        echo get_class();
+        echo '&nbsp;';
+        return new Response("4", 401);
         return $this->render('@TechBlog/Default/date.html.twig');
     }
 

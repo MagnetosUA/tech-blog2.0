@@ -7,7 +7,7 @@ security:
         in_memory:
             memory:
                 users:
-                    admin:
+                    adminicus:
                         password: '$2y$04$laThxTuc6On/EKVtMP0qpediybyvkhvbJqQz2pI6mKXv9UkctgIma'
                         roles: 'ROLE_ADMIN'
     encoders:
@@ -24,7 +24,7 @@ security:
             security: false
 
         main:
-            anonymous: ~
+#            anonymous: ~
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -32,9 +32,10 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
-            logout:
-                path: /logout
-                target: /
+#            logout:
+#                path: /logout
+#                target: /
+            security: false
 
 
     access_control:
