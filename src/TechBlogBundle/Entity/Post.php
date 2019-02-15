@@ -217,5 +217,21 @@ class Post
     {
         $this->tags->add($tag);
     }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getShortArticle()
+    {
+        return substr($this->article, 0,80)."  ...";
+    }
 }
 

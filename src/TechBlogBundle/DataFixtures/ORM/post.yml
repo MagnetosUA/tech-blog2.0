@@ -5,3 +5,4 @@ TechBlogBundle\Entity\Post:
     author: '@author*'
     category: '@category*'
     tags: '<numberBetween(1, 10)>x @tag*'
+    createdAt: '<dateTime()>'

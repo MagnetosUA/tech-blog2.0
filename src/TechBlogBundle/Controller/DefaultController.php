@@ -25,6 +25,8 @@ class DefaultController extends Controller
     {
         $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
 
+        $lastArticles = $postsRepository->findThreeLastArticles();
+
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
@@ -34,6 +36,7 @@ class DefaultController extends Controller
         );
 
         return $this->render('@TechBlog/Default/index.html.twig', [
+            'last_articles' => $lastArticles,
             'posts' => $pagination
         ]);
     }
