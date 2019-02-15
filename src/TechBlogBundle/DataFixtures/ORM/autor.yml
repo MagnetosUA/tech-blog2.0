@@ -1,5 +1,10 @@
-TechBlogBundle\Entity\Autor:
-  autor{1..10}:
-    name: '<name()>'
+TechBlogBundle\Entity\Author:
+  author{1..3}:
+    name: '<firstName()>'
+    lastName: '<lastName()>'
+    nickname: '<userName()>'
+    email: '<email()>'
     city: '<city()>'
-    language: 'en'
+    roles: '[ROLE_USER]'
+    plainPassword: '12345'
+

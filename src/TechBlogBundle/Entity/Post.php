@@ -74,6 +74,7 @@ class Post
 
     /**
      * @ORM\ManyToMany(targetEntity="TechBlogBundle\Entity\Author", inversedBy="likes")
+     * @ORM\JoinTable(name="`like`")
      */
     private $likes;
 

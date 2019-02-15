@@ -75,7 +75,7 @@ class Author implements UserInterface
     private $roles;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $password;
 
@@ -223,6 +223,7 @@ class Author implements UserInterface
     public function setPlainPassword(string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+        $this->password = null;
     }
 
     /**

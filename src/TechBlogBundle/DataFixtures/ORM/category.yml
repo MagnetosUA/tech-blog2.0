@@ -1,3 +1,3 @@
 TechBlogBundle\Entity\Category:
-  category{1..100}:
+  category{1..5}:
     title: '<word()>'
