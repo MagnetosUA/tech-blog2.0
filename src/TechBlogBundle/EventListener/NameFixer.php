@@ -4,7 +4,7 @@ namespace TechBlogBundle\EventListener;
 
 //use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use TechBlogBundle\Entity\Autor;
+use TechBlogBundle\Entity\Author;
 
 class NameFixer
 {
@@ -12,7 +12,7 @@ class NameFixer
     {
         $entity = $args->getObject();
 
-        if (!$entity instanceof  Autor) {
+        if (!$entity instanceof  Author) {
             echo 'not instance';
             return;
         }

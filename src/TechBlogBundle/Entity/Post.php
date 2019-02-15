@@ -48,8 +48,8 @@ class Post
     private $createdAt;
 
     /**
-     * @var Autor $autor
-     * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Autor", inversedBy="posts", cascade={"remove"})
+     * @var Author $autor
+     * @ORM\ManyToOne(targetEntity="Author.php", inversedBy="posts", cascade={"remove"})
      * @Assert\Valid()
      * @Gedmo\Blameable(on="create")
      *

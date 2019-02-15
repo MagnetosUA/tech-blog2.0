@@ -23,7 +23,7 @@ class PostType extends AbstractType
             ->add('category')
             ->add('date_publication', DateType::class)
             ->add('autor', EntityType::class, [
-                'class' => 'TechBlogBundle\Entity\Autor',
+                'class' => 'Author.php',
                 'choice_label' => 'name',
             ])
             ->add('rating')

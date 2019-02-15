@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TechBlogBundle\Entity\Autor;
+use TechBlogBundle\Entity\Author;
 
 class AutorType extends AbstractType
 {
@@ -27,7 +27,7 @@ class AutorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Autor::class,
+            'data_class' => Author::class,
         ]);
     }
 
