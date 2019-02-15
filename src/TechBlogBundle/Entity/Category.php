@@ -2,7 +2,6 @@
 
 namespace TechBlogBundle\Entity;
 
-use ClassesWithParents\A;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -10,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Category
  * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="categories")
+ * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class Category
@@ -127,7 +126,7 @@ class Category
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Post[]
      */
     public function getPosts(): ArrayCollection
     {
@@ -147,3 +146,4 @@ class Category
         return $this->title;
     }
 }
+
