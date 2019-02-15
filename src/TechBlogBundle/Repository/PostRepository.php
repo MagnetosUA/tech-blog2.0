@@ -32,6 +32,16 @@ class PostRepository extends EntityRepository
             ->getQuery();
         return $query->getResult();
     }
+
+    public function findAllDatePublication()
+    {
+        $query = $this->createQueryBuilder('p')
+            ->select('p.createdAt')
+            ->orderBy('p.createdAt','ASC')
+            ->setMaxResults(1)
+            ->getQuery();
+        return $query->getResult();
+    }
 }
 
 

@@ -4,6 +4,7 @@ namespace TechBlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use TechBlogBundle\Entity\Tag;
 
 /**
  * Class DefaultController
@@ -27,6 +28,10 @@ class DefaultController extends Controller
 
         $lastArticles = $postsRepository->findThreeLastArticles();
 
+        $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
+
+        $firstDatePublication = $postsRepository->findAllDatePublication();
+
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
@@ -37,7 +42,9 @@ class DefaultController extends Controller
 
         return $this->render('@TechBlog/Default/index.html.twig', [
             'last_articles' => $lastArticles,
-            'posts' => $pagination
+            'posts' => $pagination,
+            'tags' => $tags,
+            'first_date_publication' => $firstDatePublication,
         ]);
     }
 
