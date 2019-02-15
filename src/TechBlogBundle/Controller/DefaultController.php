@@ -4,7 +4,7 @@ namespace TechBlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use TechBlogBundle\Entity\Tag;
+use TechBlogBundle\Entity\Post;
 
 /**
  * Class DefaultController
@@ -46,6 +46,17 @@ class DefaultController extends Controller
             'tags' => $tags,
             'first_date_publication' => $firstDatePublication,
         ]);
+    }
+
+    public function showPostAction(Post $post)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $post = $em->find(Post::class, $post);
+
+        return $this->render('@TechBlog/Default/post.html.twig', [
+            'post' => $post,
+        ]);
+
     }
 
 }

@@ -1,5 +1,9 @@
 tech_blog_homepage:
-    path:     /
+    path: /
     defaults: { _controller: TechBlogBundle:Default:index }
+
+show_post:
+    path: /{id}
+    defaults: { _controller: TechBlogBundle:Default:showPost }
 
 
