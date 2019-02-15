@@ -4,6 +4,7 @@ namespace TechBlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,6 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="author")
  * @ORM\Entity(repositoryClass="TechBlogBundle\Repository\AutorRepository")
+ * @UniqueEntity(fields={"nickname", "email"})
  */
 class Author implements UserInterface
 {
@@ -47,6 +49,12 @@ class Author implements UserInterface
      */
     private $nickname;
 
+    /**
+     * @ORM\Column(name="email", type="string")
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
+    private $email;
     /**
      * @ORM\Column(name="city", type="string", length=100)
      * @Assert\NotBlank()
@@ -151,6 +159,22 @@ class Author implements UserInterface
     public function setNickname($nickname): void
     {
         $this->nickname = $nickname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
     }
 
     /**
