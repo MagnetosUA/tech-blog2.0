@@ -4,6 +4,8 @@ namespace TechBlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use TechBlogBundle\DataFixtures\Faker\Provider\CategoryProvider;
+use TechBlogBundle\Entity\Category;
 use TechBlogBundle\Entity\Post;
 
 /**
@@ -59,5 +61,21 @@ class DefaultController extends Controller
 
     }
 
+    public function showByCategoryAction(Category $category, Request $request)
+    {
+        $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $postsRepository->findAllQueryByCategory($category), /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+
+        return $this->render('@TechBlog/Default/by_categoty.html.twig', [
+            'posts' => $pagination,
+        ]);
+    }
 }
 

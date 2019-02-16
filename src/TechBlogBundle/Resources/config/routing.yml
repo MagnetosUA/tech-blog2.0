@@ -2,8 +2,18 @@ tech_blog_homepage:
     path: /
     defaults: { _controller: TechBlogBundle:Default:index }
 
+category:
+    path: /{title}
+    defaults: { _controller: TechBlogBundle:Default:showByCategory }
+    requirements:
+        title: '\w+'
+
 show_post:
     path: /{id}
     defaults: { _controller: TechBlogBundle:Default:showPost }
+    requirements:
+        category: '\d+'
+
+
 
 

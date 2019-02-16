@@ -38,3 +38,20 @@ services:
         resource: '../../src/TechBlogBundle'
         exclude: '../../src/TechBlogBundle/{Entity,Repository}'
         public: false
+
+    app.menu_builder:
+        class: TechBlogBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+
+
+#    TechBlogBundle\DataFixtures\Faker\Provider\CategoryProvider:
+#        tags: [ { name: nelmio_alice.faker.provider } ]
+#        arguments: ["@hautelook_alice.faker"]
+#        public: true
+#
+    faker.provider.category:
+        class: TechBlogBundle\DataFixtures\Provider\CategoryProvider
+        arguments: ["@hautelook_alice.faker"]
+        tags: [ { name: hautelook_alice.faker.provider } ]

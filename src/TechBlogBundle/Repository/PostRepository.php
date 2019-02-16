@@ -19,6 +19,15 @@ class PostRepository extends EntityRepository
             ->getQuery();
     }
 
+    public function findAllQueryByCategory($category)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.category = :category')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setParameter('category', $category)
+            ->getQuery();
+    }
+
     /**
      * Return three last created articles
      *

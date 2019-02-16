@@ -1,3 +1,6 @@
+
 TechBlogBundle\Entity\Category:
-  category{1..5}:
-    title: '<word()>'
+  category{1..4}:
+#    title: '<name()>'
+    title: '<category()>'
+#    title: 'word'

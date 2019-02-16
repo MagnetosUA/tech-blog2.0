@@ -27,6 +27,12 @@ class Category
     private $title;
 
     /**
+     * @ORM\Column(name="slug", type="string")
+     * @Gedmo\Slug(fields={"title"})
+     */
+    private $slug;
+
+    /**
      * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="category", orphanRemoval=true)
      */
     private $posts;
@@ -139,6 +145,14 @@ class Category
     public function setPosts(Post $post): void
     {
         $this->posts->add($post);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     public function __toString()
