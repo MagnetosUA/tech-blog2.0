@@ -9,6 +9,7 @@ class CategoryProvider
      * Names of categories
      */
     const NAMES = [
+        'Web Developing',
         'AI',
         'Machine Learning',
         'Effective',

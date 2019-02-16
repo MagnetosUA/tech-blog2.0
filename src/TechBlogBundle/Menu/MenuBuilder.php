@@ -26,7 +26,7 @@ class MenuBuilder
             ->addChild('Home', ['route' => 'tech_blog_homepage'])
             ->addChild('Web Developing', [
                 'route' => 'category',
-                'routeParameters' => ['slug' => 'web_developing']
+                'routeParameters' => ['slug' => 'web-developing']
             ])
             ->addChild('AI', [
                 'route' => 'category',
@@ -34,7 +34,7 @@ class MenuBuilder
             ])
             ->addChild('Mashine Learning', [
                 'route' => 'category',
-                'routeParameters' => ['slug' => 'mashine_learning']
+                'routeParameters' => ['slug' => 'machine-learning']
             ])
             ->addChild('Effective', [
                 'route' => 'category',

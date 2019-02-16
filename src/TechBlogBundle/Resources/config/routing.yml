@@ -3,16 +3,16 @@ tech_blog_homepage:
     defaults: { _controller: TechBlogBundle:Default:index }
 
 category:
-    path: /{title}
+    path: /category/{slug}
     defaults: { _controller: TechBlogBundle:Default:showByCategory }
     requirements:
-        title: '\w+'
+        slug: '\D+'
 
 show_post:
-    path: /{id}
+    path: /post/{slug}
     defaults: { _controller: TechBlogBundle:Default:showPost }
-    requirements:
-        category: '\d+'
+#    requirements:
+#        slug: '\D+'
 
 
 
