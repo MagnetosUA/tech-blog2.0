@@ -22,28 +22,28 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root');
 
-        $menu
-            ->addChild('Home', ['route' => 'tech_blog_homepage'])
-            ->addChild('Web Developing', [
+        $menu->addChild('Home', ['route' => 'tech_blog_homepage']);
+
+        $menu->addChild('Web Developing', [
                 'route' => 'category',
                 'routeParameters' => ['slug' => 'web-developing']
-            ])
-            ->addChild('AI', [
+            ]);
+        $menu->addChild('AI', [
                 'route' => 'category',
                 'routeParameters' => ['slug' => 'ai']
-            ])
-            ->addChild('Mashine Learning', [
+            ]);
+        $menu->addChild('Mashine Learning', [
                 'route' => 'category',
                 'routeParameters' => ['slug' => 'machine-learning']
-            ])
-            ->addChild('Effective', [
+            ]);
+        $menu->addChild('Effective', [
                 'route' => 'category',
                 'routeParameters' => ['slug' => 'effective']
-            ])
-            ->addChild('Algorithms', [
+            ]);
+        $menu->addChild('Algorithms', [
                 'route' => 'category',
                 'routeParameters' => ['slug' => 'algorithms']
-            ])
+            ]);
         ;
 
 
