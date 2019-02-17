@@ -21,6 +21,8 @@ class MenuBuilder
     public function createMainMenu(array $options)
     {
         $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttribute('class', 'custom-menu');
+        $menu->setCurrent(true);
 
         $menu->addChild('Home', ['route' => 'tech_blog_homepage']);
 

@@ -1,0 +1,10 @@
+.custom-menu li {
+    float: left;
+    list-style: none;
+    padding: 10px;
+}
+
+.current a {
+    text-decoration: underline;
+    color: #8b2962;
+}
