@@ -1,18 +1,16 @@
 {% extends '@TechBlog/base.html.twig' %}
 
-
-
     {% block blog_post %}
+        <h1>The current version is {{ constant('Twig_Environment::VERSION') }}</h1>
         {% for post in posts %}
         <div class="blog-post">
-            <h2 class="blog-post-title">{{ post.title }}</h2>
+            <h2 class="blog-post-title"><a href="{{ path('show_post', {slug: post.slug}) }}">{{ post.title }}</a></h2>
             <p>{{ post.category }}</p>
             <p class="blog-post-meta">{{ post.createdAt|date }} by <a href="#">{{ post.author.nickname }}</a></p>
             <p>{{ post.article }}</p>
         </div><!-- /.blog-post -->
         {% endfor %}
     {% endblock blog_post %}
-
 
 {% block pagination %}
     <nav class="blog-pagination">

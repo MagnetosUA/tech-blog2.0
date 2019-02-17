@@ -47,13 +47,15 @@
     </div>
 {% endblock popular_posts %}
 
-
+{% block blog_post %}
     {% for post in posts %}
-        {% block blog_post %}
-            {{ parent() }}
-        {% endblock blog_post %}
+        <div class="blog-post">
+            <h2 class="blog-post-title"><a href="{{ path('show_post', {slug: post.slug}) }}">{{ post.title }}</a></h2>
+            <p class="blog-post-meta">{{ post.createdAt|date }} by <a href="#">{{ post.author.nickname }}</a></p>
+            <p>{{ post.shortArticle }}</p>
+        </div><!-- /.blog-post -->
     {% endfor %}
-
+{% endblock blog_post %}
 
 {% block pagination %}
     <nav class="blog-pagination">
