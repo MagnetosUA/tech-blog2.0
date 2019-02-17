@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-    <title>{% block title %}Home{% endblock title%}</title>
+    <title>{% block title %}Tech Blog{% endblock title%}</title>
 
     {% block stylesheets %}
     <!-- Bootstrap core CSS -->
@@ -49,29 +49,13 @@
                 <div class="nav-scroller py-1 mb-2">
                     <nav class="nav d-flex justify-content-between">
                         {{ knp_menu_render('main') }}
-{#                        <a class="p-2 text-muted" href="#">World</a>#}
-{#                        <a class="p-2 text-muted" href="#">U.S.</a>#}
-{#                        <a class="p-2 text-muted" href="#">Technology</a>#}
-{#                        <a class="p-2 text-muted" href="#">Design</a>#}
-{#                        <a class="p-2 text-muted" href="#">Culture</a>#}
-{#                        <a class="p-2 text-muted" href="#">Business</a>#}
-{#                        <a class="p-2 text-muted" href="#">Politics</a>#}
-{#                        <a class="p-2 text-muted" href="#">Opinion</a>#}
-{#                        <a class="p-2 text-muted" href="#">Science</a>#}
-{#                        <a class="p-2 text-muted" href="#">Health</a>#}
-{#                        <a class="p-2 text-muted" href="#">Style</a>#}
-{#                        <a class="p-2 text-muted" href="#">Travel</a>#}
                     </nav>
                 </div>
             {% endblock navigations %}
 
-            {% block main_post %}
+            {% block main_post %}{% endblock main_post %}
 
-            {% endblock main_post %}
-
-            {% block popular_posts %}
-
-            {% endblock popular_posts %}
+            {% block popular_posts %}{% endblock popular_posts %}
         </div>
     {% endblock top_container %}
 
@@ -79,23 +63,14 @@
         <main role="main" class="container">
             <div class="row">
                 <div class="col-md-8 blog-main">
-                    <h3 class="pb-3 mb-4 font-italic border-bottom">
-                        Last publication
-                    </h3>
+                    {% block title_publication %}
+                        <h3 class="pb-3 mb-4 font-italic border-bottom">
+                            Last publication
+                        </h3>
+                    {% endblock title_publication %}
+                    {% block blog_post %}{% endblock blog_post %}
 
-                    {% block blog_post %}
-                        {% for post in posts %}
-                            <div class="blog-post">
-                                <h2 class="blog-post-title"><a href="{{ path('show_post', {slug: post.slug}) }}">{{ post.title }}</a></h2>
-                                <p class="blog-post-meta">{{ post.createdAt|date }} by <a href="#">{{ post.author.nickname }}</a></p>
-                                <p>{{ post.shortArticle }}</p>
-                            </div><!-- /.blog-post -->
-                        {% endfor %}
-                    {% endblock blog_post %}
-
-                    {% block pagination %}
-
-                    {% endblock pagination %}
+                    {% block pagination %}{% endblock pagination %}
 
                 </div><!-- /.blog-main -->
 

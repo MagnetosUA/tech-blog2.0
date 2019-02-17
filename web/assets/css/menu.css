@@ -1,9 +1,14 @@
+/* -----------------  Custom styles for Knp-menu -----------------*/
+
+
+/* make menu horisontal*/
 .custom-menu li {
     float: left;
     list-style: none;
     padding: 10px;
 }
 
+/* set up current item */
 .current a {
     text-decoration: underline;
     color: #8b2962;
