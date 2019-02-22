@@ -18,6 +18,8 @@
     <link href="{{ asset('assets/css/blog.css') }}" rel="stylesheet">
         <!-- Custom styles for menu -->
     <link href="{{ asset('assets/css/menu.css') }}" rel="stylesheet">
+        <!-- Custom styles for archive dropdown -->
+    <link href="{{ asset('assets/css/dropdown.css') }}" rel="stylesheet">
     {% endblock stylesheets%}
 </head>
 
@@ -85,18 +87,18 @@
                             <div class="p-3">
                                 <h4 class="font-italic">Archives</h4>
                                 <ol class="list-unstyled mb-0">
-                                    <li><a href="#">March 2014</a></li>
-                                    <li><a href="#">February 2014</a></li>
-                                    <li><a href="#">January 2014</a></li>
-                                    <li><a href="#">December 2013</a></li>
-                                    <li><a href="#">November 2013</a></li>
-                                    <li><a href="#">October 2013</a></li>
-                                    <li><a href="#">September 2013</a></li>
-                                    <li><a href="#">August 2013</a></li>
-                                    <li><a href="#">July 2013</a></li>
-                                    <li><a href="#">June 2013</a></li>
-                                    <li><a href="#">May 2013</a></li>
-                                    <li><a href="#">April 2013</a></li>
+                                    <div class="sidenav">
+                                        {% for year, months in period %}
+                                            <button class="dropdown-btn">{{ year }}
+                                                <i class="fa fa-caret-down"></i>
+                                            </button>
+                                            <div class="dropdown-container">
+                                                {% for month in months %}
+                                                    <a href="{{ path('archive', {date: [year, month]|join('-')}) }}">{{ month }}</a>
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </ol>
                             </div>
                         {% endblock date_publications %}
@@ -105,9 +107,9 @@
                         <div class="p-3">
                             <h4 class="font-italic">Tags</h4>
                             <ol class="list-unstyled">
-                                <li><a href="#">GitHub</a></li>
-                                <li><a href="#">Twitter</a></li>
-                                <li><a href="#">Facebook</a></li>
+                                {% for tag in tags %}
+                                    <li><a href="{{ path('tag', {name: tag.name}) }}">{{ tag.name }}</a></li>
+                                {% endfor %}
                             </ol>
                         </div>
                         {% endblock tags %}
@@ -138,6 +140,7 @@
 <script src="{{ asset('assets/js/vendor/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/holder.min.js') }}"></script>
+<script src="{{ asset('assets/js/dropdown.js') }}"></script>
 <script>
     Holder.addTheme('thumb', {
         bg: '#55595c',

@@ -3,6 +3,9 @@
 namespace TechBlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
+use TechBlogBundle\Entity\Author;
+use TechBlogBundle\Entity\Post;
 
 
 class PostRepository extends EntityRepository
@@ -19,12 +22,42 @@ class PostRepository extends EntityRepository
             ->getQuery();
     }
 
+    /**
+     * For Archive
+     *
+     * @param \DateTime $date
+     * @return \Doctrine\ORM\Query
+     */
+    public function findAllByDateQuery(\DateTime $date)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->where($qb->expr()->like('p.createdAt', $qb->expr()->literal($date->format("Y-m")."%")))
+            ->orderBy('p.createdAt', 'DESC');
+
+        return $qb->getQuery();
+    }
+
     public function findAllQueryByCategory($category)
     {
         return $this->createQueryBuilder('p')
             ->where('p.category = :category')
             ->orderBy('p.createdAt', 'DESC')
             ->setParameter('category', $category)
+            ->getQuery();
+    }
+
+    public function findAllQueryByTag($tag)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->leftJoin('p.tags', 't', Expr\Join::WITH)
+
+//            ->leftJoin('p', 't')
+            ->where('t = :tag')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setParameter('tag', $tag)
             ->getQuery();
     }
 
@@ -42,11 +75,12 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findAllDatePublication()
+    public function findPointDatePublication($sort)
     {
         $query = $this->createQueryBuilder('p')
             ->select('p.createdAt')
-            ->orderBy('p.createdAt','ASC')
+            ->orderBy('p.createdAt', $sort)
+//            ->setParameter('sort', $sort)
             ->setMaxResults(1)
             ->getQuery();
         return $query->getResult();

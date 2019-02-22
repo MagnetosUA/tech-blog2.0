@@ -1,0 +1,9 @@
+{% extends '@TechBlog/base.html.twig' %}
+
+{% block blog_post %}
+    {% include '@TechBlog/Parts/post_loop.html.twig' %}
+{% endblock blog_post %}
+
+{% block pagination %}
+    {% include '@TechBlog/Parts/pagination.html.twig' %}
+{% endblock pagination %}

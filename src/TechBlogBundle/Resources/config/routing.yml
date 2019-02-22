@@ -7,12 +7,19 @@ category:
     defaults: { _controller: TechBlogBundle:Default:showByCategory }
     requirements:
         slug: '\D+'
+tag:
+    path: /tag/{name}
+    defaults: { _controller: TechBlogBundle:Default:showByTag }
+
+archive:
+    path: /archive/{date}
+    defaults: { _controller: TechBlogBundle:Default:showByCreatedAt }
 
 show_post:
     path: /post/{slug}
     defaults: { _controller: TechBlogBundle:Default:showPost }
-#    requirements:
-#        slug: '\D+'
+
+
 
 
 

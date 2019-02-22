@@ -1,8 +1,8 @@
 TechBlogBundle\Entity\Post:
-  post{1..1000}:
+  post{1..20}:
     title: '<sentence()>'
     article: '<realText($maxNbChars = 500, $indexSize = 2)>'
     author: '@author*'
     category: '@category*'
     tags: '<numberBetween(1, 10)>x @tag*'
-    createdAt: '<dateTime()>'
+    createdAt: '<dateTimeBetween($startDate = "-5 years")>'
