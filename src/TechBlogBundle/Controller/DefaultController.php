@@ -2,7 +2,6 @@
 
 namespace TechBlogBundle\Controller;
 
-use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use TechBlogBundle\Entity\Category;
@@ -42,12 +41,9 @@ class DefaultController extends Controller
     {
         $year = $this->archiveManager->getPostPeriod();
 
-        $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
+        list($tags, $paginator, $postsRepository) = $this->getData();
+
         $lastArticles = $postsRepository->findThreeLastArticles();
-
-        $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
-
-        $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $postsRepository->findAllQuery(), /* query NOT result */
@@ -71,8 +67,6 @@ class DefaultController extends Controller
         $post = $em->find(Post::class, $post);
         $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
 
-
-
         return $this->render('@TechBlog/Default/post.html.twig', [
             'post' => $post,
             'tags' => $tags,
@@ -85,11 +79,7 @@ class DefaultController extends Controller
     {
         $year = $this->archiveManager->getPostPeriod();
 
-
-        $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
-        $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
-
-        $paginator  = $this->get('knp_paginator');
+        list($tags, $paginator, $postsRepository) = $this->getData();
 
         $pagination = $paginator->paginate(
             $postsRepository->findAllQueryByCategory($category), /* query NOT result */
@@ -108,11 +98,7 @@ class DefaultController extends Controller
     {
         $year = $this->archiveManager->getPostPeriod();
 
-        $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
-
-        $paginator  = $this->get('knp_paginator');
-
-        $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
+        list($tags, $paginator, $postsRepository) = $this->getData();
 
         $pagination = $paginator->paginate(
             $postsRepository->findAllQueryByTag($tag), /* query NOT result */
@@ -134,13 +120,9 @@ class DefaultController extends Controller
     {
         $year = $this->archiveManager->getPostPeriod();
 
-        $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
+        list($tags, $paginator, $postsRepository) = $this->getData();
 
         $lastArticles = $postsRepository->findThreeLastArticles();
-
-        $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
-
-        $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $postsRepository->findAllByDateQuery($date), /* query NOT result */
@@ -154,6 +136,19 @@ class DefaultController extends Controller
             'tags' => $tags,
             'period' => $year,
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    private function getData(): array
+    {
+        $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
+        $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
+
+        $paginator = $this->get('knp_paginator');
+
+        return array($tags, $paginator, $postsRepository);
     }
 }
 
