@@ -24,7 +24,6 @@ class DefaultController extends Controller
 
     public function __construct(ArchiveManager $archiveManager)
     {
-
         $this->archiveManager = $archiveManager;
     }
 
@@ -36,20 +35,11 @@ class DefaultController extends Controller
         echo "</pre>";
     }
 
-
     public function indexAction(Request $request)
     {
-        $year = $this->archiveManager->getPostPeriod();
-
-        list($tags, $paginator, $postsRepository) = $this->getData();
+        list($tags, $pagination, $postsRepository, $year) = $this->getData($request,__FUNCTION__, null);
 
         $lastArticles = $postsRepository->findThreeLastArticles();
-
-        $pagination = $paginator->paginate(
-            $postsRepository->findAllQuery(), /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            5/*limit per page*/
-        );
 
         return $this->render('@TechBlog/Default/index.html.twig', [
             'last_articles' => $lastArticles,
@@ -77,15 +67,7 @@ class DefaultController extends Controller
 
     public function showByCategoryAction(Category $category, Request $request)
     {
-        $year = $this->archiveManager->getPostPeriod();
-
-        list($tags, $paginator, $postsRepository) = $this->getData();
-
-        $pagination = $paginator->paginate(
-            $postsRepository->findAllQueryByCategory($category), /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            5/*limit per page*/
-        );
+        list($tags, $pagination, $postsRepository, $year) = $this->getData($request, __FUNCTION__, $category);
 
         return $this->render('@TechBlog/Default/by_categoty.html.twig', [
             'posts' => $pagination,
@@ -96,15 +78,7 @@ class DefaultController extends Controller
 
     public function showByTagAction(Tag $tag, Request $request)
     {
-        $year = $this->archiveManager->getPostPeriod();
-
-        list($tags, $paginator, $postsRepository) = $this->getData();
-
-        $pagination = $paginator->paginate(
-            $postsRepository->findAllQueryByTag($tag), /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            5/*limit per page*/
-        );
+        list($tags, $pagination, $year) = $this->getData($request, __FUNCTION__, $tag);
 
         return $this->render('@TechBlog/Default/by_tag.html.twig', [
             'posts' => $pagination,
@@ -114,21 +88,16 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param \DateTime $date
+     * @return \Symfony\Component\HttpFoundation\Response
      * @ParamConverter("date", options={"format": "Y-M"})
      */
     public function showByCreatedAtAction(Request $request, \DateTime $date)
     {
-        $year = $this->archiveManager->getPostPeriod();
-
-        list($tags, $paginator, $postsRepository) = $this->getData();
+        list($tags, $pagination, $postsRepository, $year) = $this->getData($request, __FUNCTION__, $date);
 
         $lastArticles = $postsRepository->findThreeLastArticles();
-
-        $pagination = $paginator->paginate(
-            $postsRepository->findAllByDateQuery($date), /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            5/*limit per page*/
-        );
 
         return $this->render('@TechBlog/Default/index.html.twig', [
             'last_articles' => $lastArticles,
@@ -141,14 +110,36 @@ class DefaultController extends Controller
     /**
      * @return array
      */
-    private function getData(): array
+    private function getData($request, $action, $criteria): array
     {
         $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
         $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
-
         $paginator = $this->get('knp_paginator');
 
-        return array($tags, $paginator, $postsRepository);
+        switch ($action) {
+            case 'indexAction':
+                $query = $postsRepository->findAllQuery();
+                break;
+            case 'showByCategoryAction':
+                $query = $postsRepository->findAllQueryByCategory($criteria);
+                break;
+            case 'showByTagAction':
+                $query = $postsRepository->findAllQueryByTag($criteria);
+                break;
+            case 'showByCreatedAtAction':
+                $query = $postsRepository->findAllByDateQuery($criteria);
+                break;
+        }
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+
+        $year = $this->archiveManager->getPostPeriod();
+
+        return array($tags, $pagination, $postsRepository, $year);
     }
 }
 

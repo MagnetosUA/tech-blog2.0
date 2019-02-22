@@ -50,8 +50,6 @@ class PostRepository extends EntityRepository
         return $this->createQueryBuilder('p')
             ->select('p')
             ->leftJoin('p.tags', 't', Expr\Join::WITH)
-
-//            ->leftJoin('p', 't')
             ->where('t = :tag')
             ->orderBy('p.createdAt', 'DESC')
             ->setParameter('tag', $tag)
@@ -77,10 +75,21 @@ class PostRepository extends EntityRepository
         $query = $this->createQueryBuilder('p')
             ->select('p.createdAt')
             ->orderBy('p.createdAt', $sort)
-//            ->setParameter('sort', $sort)
             ->setMaxResults(1)
             ->getQuery();
         return $query->getResult();
+    }
+
+    public function getAllDataSet()
+    {
+        $qb = $this->createQueryBuilder('q');
+        $query = $qb
+            ->select('t')
+            ->from('TechBlogBundle:Tag', 't')
+            ->select('p')
+            ->from('TechBlogBundle:Post', 'p')
+            ->getQuery();
+        return $query;
     }
 }
 
