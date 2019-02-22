@@ -21,11 +21,16 @@ class ArchiveManager
         $postsRepository = $this->doctrine->getRepository('TechBlogBundle:Post');
 
 
-        $firstDate = $postsRepository->findPointDatePublication('ASC');
-        $lastDate = $postsRepository->findPointDatePublication('DESC');
+        $dates = $postsRepository->findFirstAndLastDatePublication();
 
-        $start    = ($firstDate[0]['createdAt'])->modify('first day of this month');
-        $end      = ($lastDate[0]['createdAt'])->modify('first day of next month');
+        $firstDate = $dates['first'];
+        $lastDate = $dates['last'];
+
+        $firstDate = new \DateTime($firstDate);
+        $lastDate = new \DateTime($lastDate);
+
+        $start    = ($firstDate)->modify('first day of this month');
+        $end      = ($lastDate)->modify('first day of next month');
 
         $interval = \DateInterval::createFromDateString('1 month');
         $period   = new \DatePeriod($start, $interval, $end);

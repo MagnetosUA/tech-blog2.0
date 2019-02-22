@@ -34,10 +34,23 @@ services:
 #    Gedmo\Blameable\BlameableListener:
 #        tags:
 #            - { name: doctrine.event_listener, event: prePersist }
+
     TechBlogBundle\:
         resource: '../../src/TechBlogBundle'
         exclude: '../../src/TechBlogBundle/{Entity,Repository}'
         public: false
+
+    TechBlogBundle\Repository\PostRepository:
+        class: TechBlogBundle\Repository\PostRepository
+#        arguments: ["@doctrine.orm.default_entity_manager"]
+        factory: 'doctrine.orm.entity_manager:getRepository'
+        arguments: ['TechBlogBundle\Entity\Post']
+
+#    TechBlogBundle\Repository\PostRepository\:
+##        resource: '../../src/TechBlogBundle/Repository'
+#        resource: '../../src/TechBlogBundle/Repository/PostRepository'
+##        arguments: ["@doctrine.orm.default_entity_manager"]
+#        public: true
 
     app.menu_builder:
         class: TechBlogBundle\Menu\MenuBuilder
@@ -45,17 +58,7 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
 
-
-#    TechBlogBundle\DataFixtures\Faker\Provider\CategoryProvider:
-#        tags: [ { name: nelmio_alice.faker.provider } ]
-#        arguments: ["@hautelook_alice.faker"]
-#        public: true
-#
     faker.provider.category:
         class: TechBlogBundle\DataFixtures\Provider\CategoryProvider
         arguments: ["@hautelook_alice.faker"]
         tags: [ { name: hautelook_alice.faker.provider } ]
-
-#    TechBlogBundle\Services\ArchiveManager\:
-#        resource: '../../src/TechBlogBundle/Services/'
-#        public: false

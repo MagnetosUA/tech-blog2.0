@@ -70,26 +70,23 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findPointDatePublication($sort)
+    public function findFirstAndLastDatePublication()
     {
-        $query = $this->createQueryBuilder('p')
-            ->select('p.createdAt')
-            ->orderBy('p.createdAt', $sort)
-            ->setMaxResults(1)
-            ->getQuery();
-        return $query->getResult();
+        $query = $this->_em->createQuery(
+            'SELECT MIN(p.createdAt) AS first, MAX(p.createdAt) AS last FROM TechBlogBundle\Entity\Post p'
+        );
+        return $query->getSingleResult();
     }
 
+    /**
+     * @return array
+     */
     public function getAllDataSet()
     {
-        $qb = $this->createQueryBuilder('q');
-        $query = $qb
-            ->select('t')
-            ->from('TechBlogBundle:Tag', 't')
-            ->select('p')
-            ->from('TechBlogBundle:Post', 'p')
-            ->getQuery();
-        return $query;
+        $query = $this->_em->createQuery(
+            'SELECT t, p FROM TechBlogBundle\Entity\Tag t, TechBlogBundle\Entity\Post p WHERE p.id > 1017 ORDER BY t.id DESC'
+        );
+        return $query->getResult();
     }
 }
 

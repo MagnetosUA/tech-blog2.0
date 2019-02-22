@@ -138,10 +138,6 @@ class Post
         return $this->createdAt;
     }
 
-    public function getCreatedY()
-    {
-        return $this->createdAt->format("Y");
-    }
     /**
      * @return Author
      */
