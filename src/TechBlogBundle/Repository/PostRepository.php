@@ -4,9 +4,6 @@ namespace TechBlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
-use TechBlogBundle\Entity\Author;
-use TechBlogBundle\Entity\Post;
-
 
 class PostRepository extends EntityRepository
 {

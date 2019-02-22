@@ -9,6 +9,7 @@ use TechBlogBundle\Entity\Category;
 use TechBlogBundle\Entity\Post;
 use TechBlogBundle\Entity\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use TechBlogBundle\Services\ArchiveManager;
 
 /**
  * Class DefaultController
@@ -16,6 +17,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class DefaultController extends Controller
 {
+
+    /**
+     * @var ArchiveManager
+     */
+    private $archiveManager;
+
+    public function __construct(ArchiveManager $archiveManager)
+    {
+
+        $this->archiveManager = $archiveManager;
+    }
 
     private function goodPrintR($array)
     {
@@ -28,25 +40,9 @@ class DefaultController extends Controller
 
     public function indexAction(Request $request)
     {
+        $year = $this->archiveManager->getPostPeriod();
+
         $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
-
-
-        $firstDate = $postsRepository->findPointDatePublication('ASC');
-        $lastDate = $postsRepository->findPointDatePublication('DESC');
-
-        $start    = ($firstDate[0]['createdAt'])->modify('first day of this month');
-        $end      = ($lastDate[0]['createdAt'])->modify('first day of next month');
-
-        $interval = \DateInterval::createFromDateString('1 month');
-        $period   = new \DatePeriod($start, $interval, $end);
-
-        $year = [];
-
-        foreach ($period as $dt) {
-            $y = $dt->format("Y");
-            $year[$y][] = $dt->format("M");;
-        }
-
         $lastArticles = $postsRepository->findThreeLastArticles();
 
         $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
@@ -69,6 +65,8 @@ class DefaultController extends Controller
 
     public function showPostAction(Post $post)
     {
+        $year = $this->archiveManager->getPostPeriod();
+
         $em = $this->getDoctrine()->getManager();
         $post = $em->find(Post::class, $post);
         $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
@@ -78,13 +76,18 @@ class DefaultController extends Controller
         return $this->render('@TechBlog/Default/post.html.twig', [
             'post' => $post,
             'tags' => $tags,
+            'period' => $year,
         ]);
 
     }
 
     public function showByCategoryAction(Category $category, Request $request)
     {
+        $year = $this->archiveManager->getPostPeriod();
+
+
         $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
+        $tags = $this->getDoctrine()->getRepository('TechBlogBundle:Tag')->findAll();
 
         $paginator  = $this->get('knp_paginator');
 
@@ -96,11 +99,15 @@ class DefaultController extends Controller
 
         return $this->render('@TechBlog/Default/by_categoty.html.twig', [
             'posts' => $pagination,
+            'period' => $year,
+            'tags' => $tags,
         ]);
     }
 
     public function showByTagAction(Tag $tag, Request $request)
     {
+        $year = $this->archiveManager->getPostPeriod();
+
         $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
 
         $paginator  = $this->get('knp_paginator');
@@ -116,6 +123,7 @@ class DefaultController extends Controller
         return $this->render('@TechBlog/Default/by_tag.html.twig', [
             'posts' => $pagination,
             'tags' => $tags,
+            'period' => $year,
         ]);
     }
 
@@ -124,27 +132,9 @@ class DefaultController extends Controller
      */
     public function showByCreatedAtAction(Request $request, \DateTime $date)
     {
+        $year = $this->archiveManager->getPostPeriod();
+
         $postsRepository = $this->getDoctrine()->getRepository('TechBlogBundle:Post');
-
-//        var_dump($date->format('Y'));die;
-
-
-
-        $firstDate = $postsRepository->findPointDatePublication('ASC');
-        $lastDate = $postsRepository->findPointDatePublication('DESC');
-
-        $start    = ($firstDate[0]['createdAt'])->modify('first day of this month');
-        $end      = ($lastDate[0]['createdAt'])->modify('first day of next month');
-
-        $interval = \DateInterval::createFromDateString('1 month');
-        $period   = new \DatePeriod($start, $interval, $end);
-
-        $year = [];
-
-        foreach ($period as $dt) {
-            $y = $dt->format("Y");
-            $year[$y][] = $dt->format("M");;
-        }
 
         $lastArticles = $postsRepository->findThreeLastArticles();
 

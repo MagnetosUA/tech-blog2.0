@@ -55,3 +55,7 @@ services:
         class: TechBlogBundle\DataFixtures\Provider\CategoryProvider
         arguments: ["@hautelook_alice.faker"]
         tags: [ { name: hautelook_alice.faker.provider } ]
+
+#    TechBlogBundle\Services\ArchiveManager\:
+#        resource: '../../src/TechBlogBundle/Services/'
+#        public: false
