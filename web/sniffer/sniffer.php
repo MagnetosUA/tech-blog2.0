@@ -32,3 +32,6 @@ $query = $qb
     ->addSelect($qb->expr()->max('p.createdAt'))
     ->getQuery();
 return $query->getSingleResult();
+
+
+->addSelect('MAX(p.createdAt) as last');

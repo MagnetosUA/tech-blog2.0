@@ -20,7 +20,6 @@ class ArchiveManager
     {
         $postsRepository = $this->doctrine->getRepository('TechBlogBundle:Post');
 
-
         $dates = $postsRepository->findFirstAndLastDatePublication();
 
         $firstDate = $dates['first'];
@@ -29,11 +28,11 @@ class ArchiveManager
         $firstDate = new \DateTime($firstDate);
         $lastDate = new \DateTime($lastDate);
 
-        $start    = ($firstDate)->modify('first day of this month');
-        $end      = ($lastDate)->modify('first day of next month');
+        $start = ($firstDate)->modify('first day of this month');
+        $end = ($lastDate)->modify('first day of next month');
 
         $interval = \DateInterval::createFromDateString('1 month');
-        $period   = new \DatePeriod($start, $interval, $end);
+        $period = new \DatePeriod($start, $interval, $end);
 
         $year = [];
 

@@ -72,9 +72,11 @@ class PostRepository extends EntityRepository
 
     public function findFirstAndLastDatePublication()
     {
-        $query = $this->_em->createQuery(
-            'SELECT MIN(p.createdAt) AS first, MAX(p.createdAt) AS last FROM TechBlogBundle\Entity\Post p'
-        );
+        $qb = $this->createQueryBuilder('p');
+        $query = $qb
+            ->select($qb->expr()->min('p.createdAt').'AS first')
+            ->addSelect($qb->expr()->max('p.createdAt').'AS last')
+            ->getQuery();
         return $query->getSingleResult();
     }
 
