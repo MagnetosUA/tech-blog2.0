@@ -81,6 +81,23 @@ class PostRepository extends EntityRepository
     }
 
     /**
+     * Get data by raw SQL
+     *
+     * @return array|mixed
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function findFirstAndLastDatePublicationByRawSql()
+    {
+        $conn = $this->_em->getConnection();
+        $sql = "SELECT MIN(created_at) AS first , MAX(created_at) AS last FROM post ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+        $data = array_shift($data);
+        return $data;
+    }
+
+    /**
      * @return array
      */
     public function getAllDataSet()

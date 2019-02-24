@@ -20,8 +20,8 @@ class ArchiveManager
     {
         $postsRepository = $this->doctrine->getRepository('TechBlogBundle:Post');
 
-        $dates = $postsRepository->findFirstAndLastDatePublication();
-
+//        $dates = $postsRepository->findFirstAndLastDatePublication();
+        $dates = $postsRepository->findFirstAndLastDatePublicationByRawSql();
         $firstDate = $dates['first'];
         $lastDate = $dates['last'];
 
