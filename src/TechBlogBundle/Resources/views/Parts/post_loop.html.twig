@@ -2,9 +2,10 @@
     <div class="blog-post">
         <h2 class="blog-post-title"><a href="{{ path('show_post', {slug: post.slug}) }}">{{ post.title }}</a></h2>
         {% for tag in post.tags %}
-            <i> #{{ tag.name }}</i>
+            <i {% if current_tag is defined and current_tag == tag.name %}class="current-tag" {% endif %}> #{{ tag.name }}</i>
         {% endfor %}
         <p class="blog-post-meta">{{ post.createdAt|date }} by <a href="#">{{ post.author.nickname }}</a></p>
         <p>{{ post.shortArticle }}</p>
     </div><!-- /.blog-post -->
+    {{ current_tag }}
 {% endfor %}
