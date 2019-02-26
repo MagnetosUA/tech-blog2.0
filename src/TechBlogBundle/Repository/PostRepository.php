@@ -4,6 +4,7 @@ namespace TechBlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class PostRepository extends EntityRepository
 {
@@ -47,14 +48,14 @@ class PostRepository extends EntityRepository
 
     public function findAllQueryByTag($tag)
     {
-        return $this->createQueryBuilder('p')
-            ->select('p')
-            ->leftJoin('p.tags', 't', Expr\Join::WITH)
-            ->where('t = :tag')
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where(':tag MEMBER OF p.tags')
             ->orderBy('p.createdAt', 'DESC')
-            ->setParameter('tag', $tag)
-            ->getQuery();
+            ->setParameter('tag', $tag);
+        return $qb->getQuery();
     }
+
 
     /**
      * Return three last created articles
