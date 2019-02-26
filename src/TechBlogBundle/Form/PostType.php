@@ -4,9 +4,6 @@ namespace TechBlogBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,21 +17,15 @@ class PostType extends AbstractType
         $builder
             ->add('title')
             ->add('article')
-            ->add('category')
-            ->add('date_publication', DateType::class)
-            ->add('autor', EntityType::class, [
-                'class' => 'Author.php',
+            ->add('category', EntityType::class, [
+                'class' => 'TechBlogBundle\Entity\Category',
+                'choice_label' => 'title',
+            ])
+            ->add('author', EntityType::class, [
+                'class' => 'TechBlogBundle\Entity\Author',
                 'choice_label' => 'name',
             ])
-            ->add('rating')
-            ->add('is_unique', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false
-            ])
-            ->add('language', LanguageType::class, [
-                'data_class' => PostType::class,
-            ])
-            ->add('send', SubmitType::class);
+            ->add('Create', SubmitType::class);
 
     }
 

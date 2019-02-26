@@ -36,7 +36,7 @@ class Post
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      * @Assert\Type("string")
-     * @Assert\Length(min="100")
+     * @Assert\Length(min="5")
      */
     private $article;
 
@@ -55,10 +55,10 @@ class Post
     /**
      * @var Author $author
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Author", inversedBy="posts", cascade={"remove"})
-     * @Assert\Valid()
-     * @Gedmo\Blameable(on="create")
      *
      */
+    //     * @Assert\Valid()
+//     * @Gedmo\Blameable(on="create")
     private $author;
 
     /**
@@ -154,10 +154,8 @@ class Post
         $this->author = $author;
     }
 
-    /**
-     * @return Category
-     */
-    public function getCategory(): Category
+
+    public function getCategory()
     {
         return $this->category;
     }
@@ -216,14 +214,6 @@ class Post
     public function addTag(Tag $tag): void
     {
         $this->tags->add($tag);
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     /**

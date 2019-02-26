@@ -9,6 +9,7 @@ use TechBlogBundle\Entity\Category;
 use TechBlogBundle\Entity\Post;
 use TechBlogBundle\Entity\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use TechBlogBundle\Form\PostType;
 use TechBlogBundle\Repository\PostRepository;
 use TechBlogBundle\Services\ArchiveManager;
 
@@ -107,6 +108,23 @@ class DefaultController extends Controller
             'posts' => $pagination,
             'tags' => $tags,
             'period' => $year,
+        ]);
+    }
+
+    public function addPostAction(Request $request)
+    {
+        $form = $this->createForm(PostType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+            return $this->redirect('add-post');
+        }
+        return $this->render('@TechBlog/Default/add_post.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
