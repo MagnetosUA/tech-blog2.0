@@ -1,4 +1,4 @@
-<?php
+
 
 // Examples of query building
 
@@ -34,4 +34,36 @@ $query = $qb
 return $query->getSingleResult();
 
 
-->addSelect('MAX(p.createdAt) as last');
+$qb->addSelect('MAX(p.createdAt) as last');
+
+public function findAllQueryByTagByRawSql($tag)
+{
+    $conn = $this->_em->getConnection();
+    $sql = "SELECT * FROM post WHERE id IN(SELECT post_id FROM post_tag WHERE tag_id = :tag)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam('tag', $tag);
+    $stmt->execute();
+    $data = $stmt->fetchAll();
+
+    return $data;
+}
+
+public function findAllQueryByTag($tag)
+{
+return $this->createQueryBuilder('p')
+->leftJoin('p.tags', 't', Expr\Join::WITH)
+->where('t = :tag')
+->orderBy('p.createdAt', 'DESC')
+->setParameter('tag', $tag)
+->getQuery();
+}
+
+public function findAllTagsAndJoinedPostsQuery($tag)
+{
+$qb = $this->createQueryBuilder('p');
+$qb
+->innerJoin('p.tags', 't', Expr\Join::WITH, 't = :tag')
+->orderBy('p.createdAt', 'DESC')
+->setParameter('tag', $tag);
+return $qb->getQuery();
+}

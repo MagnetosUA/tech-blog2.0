@@ -3,8 +3,6 @@
 namespace TechBlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class PostRepository extends EntityRepository
 {
@@ -29,14 +27,16 @@ class PostRepository extends EntityRepository
     public function findAllByDateQuery(\DateTime $date)
     {
         $qb = $this->createQueryBuilder('p');
-
         $qb
             ->where($qb->expr()->like('p.createdAt', $qb->expr()->literal($date->format("Y-m")."%")))
             ->orderBy('p.createdAt', 'DESC');
-
         return $qb->getQuery();
     }
 
+    /**
+     * @param $category
+     * @return \Doctrine\ORM\Query
+     */
     public function findAllQueryByCategory($category)
     {
         return $this->createQueryBuilder('p')
@@ -46,16 +46,18 @@ class PostRepository extends EntityRepository
             ->getQuery();
     }
 
+    /**
+     * @param $tag
+     * @return \Doctrine\ORM\Query
+     */
     public function findAllQueryByTag($tag)
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb
+        return $this->createQueryBuilder('p')
             ->where(':tag MEMBER OF p.tags')
             ->orderBy('p.createdAt', 'DESC')
-            ->setParameter('tag', $tag);
-        return $qb->getQuery();
+            ->setParameter('tag', $tag)
+            ->getQuery();
     }
-
 
     /**
      * Return three last created articles
@@ -71,6 +73,11 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
+    /**
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findFirstAndLastDatePublication()
     {
         $qb = $this->createQueryBuilder('p');
@@ -98,16 +105,5 @@ class PostRepository extends EntityRepository
         return $data;
     }
 
-    /**
-     * @return array
-     */
-    public function getAllDataSet()
-    {
-        $query = $this->_em->createQuery(
-            'SELECT t, p FROM TechBlogBundle\Entity\Tag t, TechBlogBundle\Entity\Post p WHERE p.id > 1017 ORDER BY t.id DESC'
-        );
-        return $query->getResult();
-    }
 }
-
 

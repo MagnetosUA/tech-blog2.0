@@ -41,25 +41,6 @@ class DefaultController extends Controller
     {
         list($tags, $pagination, $postRepository, $year) = $this->getData($request,__FUNCTION__, null);
 
-//        $res = $postRepository->findFirstAndLastDatePublication();
-//
-//        $res = $postRepository->getAllDataSet();
-//
-//        $objects = [];
-//
-//        foreach ($res as $r) {
-//            if ($r instanceof Tag) {
-//                $objects["tags"][] = $r;
-//            } elseif ($r instanceof Post) {
-//                $objects["posts"][] = $r;
-//            }
-////            echo get_class($r)."<br>";
-//        }
-////        $this->goodPrintR($res);die;
-//        var_dump($objects);
-//        return new Response('<body>4</body>');
-//        die;
-
         $lastArticles = $postRepository->findThreeLastArticles();
 
         return $this->render('@TechBlog/Default/index.html.twig', [
@@ -105,6 +86,7 @@ class DefaultController extends Controller
             'posts' => $pagination,
             'tags' => $tags,
             'period' => $year,
+//            'current_tag' => $tag->getName(),
         ]);
     }
 
