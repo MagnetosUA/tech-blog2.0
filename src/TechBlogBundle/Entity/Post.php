@@ -57,9 +57,9 @@ class Post
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Author", inversedBy="posts", cascade={"remove"})
      *
      */
-    //     * @Assert\Valid()
-//     * @Gedmo\Blameable(on="create")
     private $author;
+    // @Assert\Valid()
+    // @Gedmo\Blameable(on="create")
 
     /**
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Category", inversedBy="posts")
@@ -201,20 +201,30 @@ class Post
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|Tag[]
      */
     public function getTags()
     {
         return $this->tags;
     }
 
-    /**
-     * @param Tag $tag
-     */
-    public function addTag(Tag $tag): void
+   
+    public function addTag(Tag $tag)
     {
-        $this->tags->add($tag);
+        if ($this->tags->contains($tag)) {
+            return;
+        }
+//        $this->tags->add($tag);
+//        $tag->addPost($this);
+//        return $this;
+        $this->tags[] = $tag;
     }
+
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
 
     /**
      * @return bool|string

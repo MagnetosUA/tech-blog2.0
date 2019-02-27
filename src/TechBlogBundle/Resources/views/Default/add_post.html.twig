@@ -1,12 +1,23 @@
 {% extends '@TechBlog/base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{% endblock stylesheets %}
 
-    {% block blog_post %}
-        {{ form_start(form) }}
-        {{ form_end(form) }}
-    {% endblock blog_post %}
+{% block blog_post %}
+    <script>
+        $(document).ready(function() {
+            $('.select_tags').select2();
+        });
+    </script>
+    {{ form_start(form) }}
+    {{ form_end(form) }}
 
-    {% block sidebar %}
-    {% endblock sidebar %}
+{% endblock blog_post %}
+
+{% block sidebar %}
+{% endblock sidebar %}
 
 

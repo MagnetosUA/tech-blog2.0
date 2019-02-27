@@ -64,7 +64,7 @@ class Author implements UserInterface
     private $city;
 
     /**
-     * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="autor", orphanRemoval=true, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="TechBlogBundle\Entity\Post", mappedBy="author", orphanRemoval=true, fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $posts;

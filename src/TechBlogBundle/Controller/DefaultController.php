@@ -117,11 +117,13 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Post $post */
             $post = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
-            return $this->redirect('add-post');
+            $this->addFlash('notice', 'Post is Success Created!');
+            return $this->redirectToRoute('tech_blog_homepage');
         }
         return $this->render('@TechBlog/Default/add_post.html.twig', [
             'form' => $form->createView(),

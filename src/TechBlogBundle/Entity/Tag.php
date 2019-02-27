@@ -78,7 +78,11 @@ class Tag
      */
     public function addPost(Post $post)
     {
+        if ($this->posts->contains($post)) {
+            return;
+        }
         $this->posts->add($post);
+        $post->addTag($this);
     }
 
     /**

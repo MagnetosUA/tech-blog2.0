@@ -8,9 +8,21 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use TechBlogBundle\Entity\Post;
+use TechBlogBundle\Entity\Tag;
 
 class PostType extends AbstractType
 {
+
+    /**
+     * @var Tag
+     */
+    private $tag;
+
+    public function __construct()
+    {
+
+        $this->tag = new Tag;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,8 +37,17 @@ class PostType extends AbstractType
                 'class' => 'TechBlogBundle\Entity\Author',
                 'choice_label' => 'name',
             ])
+            ->add('tags', EntityType::class, [
+                'class' => 'TechBlogBundle\Entity\Tag',
+                'choice_label' => 'name',
+                'by_reference' => false,
+//                'expanded' => true,
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'select_tags'
+                ]
+            ])
             ->add('Create', SubmitType::class);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
