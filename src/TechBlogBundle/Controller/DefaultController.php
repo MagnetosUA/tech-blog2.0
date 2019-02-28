@@ -130,6 +130,44 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function removePostAction(Post $post)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($post);
+        $em->flush();
+        $this->addFlash('notice', 'Post is Success Removed!');
+
+        return $this->redirectToRoute('tech_blog_homepage');
+    }
+
+    public function editPostAction(Post $post, Request $request)
+    {
+//        $em = $this->getDoctrine()->getManager();
+//        $em->remove($post);
+//        $em->flush();
+//        $this->addFlash('notice', 'Post is Success Removed!');
+//
+//        return $this->redirectToRoute('tech_blog_homepage');
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var Post $post */
+            $post = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+            $this->addFlash('notice', 'Post is Success Updated!');
+            return $this->redirectToRoute('tech_blog_homepage');
+        }
+        return $this->render('@TechBlog/Default/add_post.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
     /**
      * @return array
      */

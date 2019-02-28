@@ -12,18 +12,6 @@ use TechBlogBundle\Entity\Tag;
 
 class PostType extends AbstractType
 {
-
-    /**
-     * @var Tag
-     */
-    private $tag;
-
-    public function __construct()
-    {
-
-        $this->tag = new Tag;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -41,13 +29,12 @@ class PostType extends AbstractType
                 'class' => 'TechBlogBundle\Entity\Tag',
                 'choice_label' => 'name',
                 'by_reference' => false,
-//                'expanded' => true,
                 'multiple' => true,
                 'attr' => [
                     'class' => 'select_tags'
                 ]
             ])
-            ->add('Create', SubmitType::class);
+            ->add('Save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

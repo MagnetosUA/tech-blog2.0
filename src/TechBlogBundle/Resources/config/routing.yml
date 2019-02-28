@@ -23,6 +23,14 @@ add_post:
     path: /add-post
     defaults: { _controller: TechBlogBundle:Default:addPost }
 
+remove_post:
+    path: /remove-post/{id}
+    defaults: { _controller: TechBlogBundle:Default:removePost }
+
+edit_post:
+    path: /edit-post/{id}
+    defaults: { _controller: TechBlogBundle:Default:editPost }
+
 
 
 
