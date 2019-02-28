@@ -1,24 +1,17 @@
-# To get started with security, check out the documentation:
-# https://symfony.com/doc/current/security.html
 security:
 
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         tech_users:
             entity: { class: TechBlogBundle\Entity\Author, property: nickname }
-
     encoders:
         TechBlogBundle\Entity\Author: bcrypt
 
-
     firewalls:
-
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
+            switch_user: ~
             anonymous: ~
             guard:
                 authenticators:
@@ -26,6 +19,11 @@ security:
             logout:
                 path: /logout
 
-
     access_control:
-        - { path: ^/post, roles: ROLE_USER }
+        - { path: ^/add-post, roles: ROLE_USER }
+        - { path: ^/edit-post, roles: ROLE_USER }
+        - { path: ^/remove-post, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_SUPERADMIN: [ROLE_ADMIN]
+        ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]

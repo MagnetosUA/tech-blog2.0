@@ -5,6 +5,6 @@ TechBlogBundle\Entity\Author:
     nickname: '<userName()>'
     email: '<email()>'
     city: '<city()>'
-    roles: '[ROLE_USER]'
+    roles: ['ROLE_ADMIN']
     plainPassword: 'prodigy'
 

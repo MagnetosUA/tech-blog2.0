@@ -2,7 +2,6 @@
 
 namespace TechBlogBundle\Controller;
 
-use function Couchbase\defaultDecoder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use TechBlogBundle\Form\LoginType;
 
@@ -22,7 +21,6 @@ class SecurityController extends Controller
         ]);
 
         return $this->render('@TechBlog/Security/login.html.twig', [
-
                 'form' => $form->createView(),
                 'error' => $error,
             ]
