@@ -57,7 +57,7 @@
             {% endblock header %}
 
             {% block navigations %}
-                <div class="nav-scroller py-1 mb-2">
+                <div class="nav-scroller py-1 mb-1">
                     <nav class="nav d-flex justify-content-between">
                         {{ knp_menu_render('main') }}
                     </nav>
@@ -93,7 +93,8 @@
                                 <p><a href="{{ path('remove_post', {'id': post.id}) }}">Remove Post</a></p>
                                 <p><a href="{{ path('edit_post', {'id': post.id}) }}">Edit Post</a></p>
                             {% endif %}
-                            <h4 class="font-italic">About</h4>
+                            <h4 class="font-italic">Welcome {{ app.user ? app.user.nickname : 'Anonymous' }}</h4>
+
                             <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
                         </div>
 
