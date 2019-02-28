@@ -7,5 +7,9 @@ sum:
     type: annotation
     prefix: /prefix
 
-logout:
+security_login:
+    path: /login
+    defaults: { _controller: TechBlogBundle:Security:login }
+
+security_logout:
     path: /logout

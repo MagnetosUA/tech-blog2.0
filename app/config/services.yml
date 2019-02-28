@@ -42,23 +42,24 @@ services:
 
     TechBlogBundle\Repository\PostRepository:
         class: TechBlogBundle\Repository\PostRepository
-#        arguments: ["@doctrine.orm.default_entity_manager"]
         factory: 'doctrine.orm.entity_manager:getRepository'
         arguments: ['TechBlogBundle\Entity\Post']
 
-#    TechBlogBundle\Repository\PostRepository\:
-##        resource: '../../src/TechBlogBundle/Repository'
-#        resource: '../../src/TechBlogBundle/Repository/PostRepository'
-##        arguments: ["@doctrine.orm.default_entity_manager"]
-#        public: true
+    TechBlogBundle\Doctrine\HashPasswordListener:
+        class: TechBlogBundle\Doctrine\HashPasswordListener
+        tags:
+            - { name: doctrine.event_subscriber }
 
-    app.menu_builder:
+
+    TechBlogBundle\Menu\MenuBulider:
         class: TechBlogBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+        public: true
 
-    faker.provider.category:
+    TechBlogBundle\DataFixtures\Provider\CategoryProvider:
         class: TechBlogBundle\DataFixtures\Provider\CategoryProvider
         arguments: ["@hautelook_alice.faker"]
-        tags: [ { name: hautelook_alice.faker.provider } ]
+        tags:
+            - { name: hautelook_alice.faker.provider }

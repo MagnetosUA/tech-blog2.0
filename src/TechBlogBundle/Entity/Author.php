@@ -210,6 +210,14 @@ class Author implements UserInterface
     }
 
     /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
      * @return string
      */
     public function getPlainPassword(): string
@@ -223,6 +231,9 @@ class Author implements UserInterface
     public function setPlainPassword(string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+
+        // forces the object to look "dirty" to Doctrine. Avoids
+        // Doctrine *not* saving this entity, if only plainPassword change
         $this->password = null;
     }
 
@@ -252,7 +263,7 @@ class Author implements UserInterface
 
     public function getRoles()
     {
-        return $this->roles;
+        return ['ROLE_USER'];
     }
 
     /**
@@ -275,7 +286,7 @@ class Author implements UserInterface
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 
 

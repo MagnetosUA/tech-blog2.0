@@ -2,9 +2,9 @@
 
 namespace TechBlogBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use TechBlogBundle\Entity\Category;
 use TechBlogBundle\Entity\Post;
 use TechBlogBundle\Entity\Tag;
@@ -87,7 +87,6 @@ class DefaultController extends Controller
             'posts' => $pagination,
             'tags' => $tags,
             'period' => $year,
-//            'current_tag' => $tag->getName(),
         ]);
     }
 
@@ -130,9 +129,8 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function removePostAction(Post $post)
+    public function removePostAction(Post $post, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
         $em->remove($post);
         $em->flush();
         $this->addFlash('notice', 'Post is Success Removed!');
@@ -140,15 +138,8 @@ class DefaultController extends Controller
         return $this->redirectToRoute('tech_blog_homepage');
     }
 
-    public function editPostAction(Post $post, Request $request)
+    public function editPostAction(Post $post, Request $request, EntityManagerInterface $em)
     {
-//        $em = $this->getDoctrine()->getManager();
-//        $em->remove($post);
-//        $em->flush();
-//        $this->addFlash('notice', 'Post is Success Removed!');
-//
-//        return $this->redirectToRoute('tech_blog_homepage');
-
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
@@ -156,7 +147,6 @@ class DefaultController extends Controller
 
             /** @var Post $post */
             $post = $form->getData();
-            $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
             $this->addFlash('notice', 'Post is Success Updated!');
@@ -167,8 +157,10 @@ class DefaultController extends Controller
         ]);
     }
 
-
     /**
+     * @param $request
+     * @param $action
+     * @param $criteria
      * @return array
      */
     private function getData($request, $action, $criteria): array
