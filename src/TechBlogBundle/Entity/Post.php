@@ -55,6 +55,8 @@ class Post
     /**
      * @var Author $author
      * @ORM\ManyToOne(targetEntity="TechBlogBundle\Entity\Author", inversedBy="posts")
+     * @Gedmo\Blameable(on="create")
+     * @Assert\Valid()
      *
      */
     private $author;

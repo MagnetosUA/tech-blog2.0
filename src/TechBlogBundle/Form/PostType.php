@@ -21,10 +21,6 @@ class PostType extends AbstractType
                 'class' => 'TechBlogBundle\Entity\Category',
                 'choice_label' => 'title',
             ])
-            ->add('author', EntityType::class, [
-                'class' => 'TechBlogBundle\Entity\Author',
-                'choice_label' => 'name',
-            ])
             ->add('tags', EntityType::class, [
                 'class' => 'TechBlogBundle\Entity\Tag',
                 'choice_label' => 'name',

@@ -72,7 +72,7 @@ class Author implements UserInterface
     /**
      * @ORM\Column(type="json_array")
      */
-    private $roles;
+    private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -81,7 +81,6 @@ class Author implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      * @Assert\Length(min="5", max="25")
      *
@@ -263,7 +262,20 @@ class Author implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        // give everyone ROLE_USER!
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        return $roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 
     /**
