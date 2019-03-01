@@ -1,0 +1,22 @@
+{% extends '@TechBlog/base.html.twig' %}
+
+{% block main_container %}
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+{#                {% if error %}#}
+{#                    <div class="alert alert-danger">#}
+{#                        {{ error.messageKey|trans(error.messageData, 'security') }}#}
+{#                    </div>#}
+{#                {% endif %}#}
+
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+
+                <span class="fa fa-lock"></span>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </main>
+{% endblock main_container %}

@@ -7,6 +7,10 @@ sum:
     type: annotation
     prefix: /prefix
 
+register_author:
+    path: /register-author
+    defaults: { _controller: TechBlogBundle:Author:register }
+
 security_login:
     path: /login
     defaults: { _controller: TechBlogBundle:Security:login }

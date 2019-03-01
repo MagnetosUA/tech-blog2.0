@@ -14,7 +14,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="author")
  * @ORM\Entity(repositoryClass="TechBlogBundle\Repository\AutorRepository")
- * @UniqueEntity(fields={"nickname", "email"})
+ *
+ * @UniqueEntity(fields={"nickname"}, message="The Author with this Nickname is exists")
+ * @UniqueEntity(fields={"email"}, message="The Author with this Email is exists")
  */
 class Author implements UserInterface
 {
@@ -42,7 +44,7 @@ class Author implements UserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(name="nickname", type="string", length=30)
+     * @ORM\Column(name="nickname", type="string", length=30, unique=true)
      * @Assert\NotBlank()
      * @Assert\Type("string")
      * @Assert\Length(min="3", max="30")
@@ -50,11 +52,12 @@ class Author implements UserInterface
     private $nickname;
 
     /**
-     * @ORM\Column(name="email", type="string")
+     * @ORM\Column(name="email", type="string", unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
+
     /**
      * @ORM\Column(name="city", type="string", length=100)
      * @Assert\NotBlank()
@@ -81,9 +84,7 @@ class Author implements UserInterface
 
     /**
      * @var string
-     * @Assert\Type("string")
-     * @Assert\Length(min="5", max="25")
-     *
+     * @Assert\NotBlank(groups={"Registration"})
      */
     private $plainPassword;
 
@@ -219,7 +220,7 @@ class Author implements UserInterface
     /**
      * @return string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword()
     {
         return $this->plainPassword;
     }
