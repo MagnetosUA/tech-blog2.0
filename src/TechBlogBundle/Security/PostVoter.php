@@ -3,6 +3,7 @@
 namespace TechBlogBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use TechBlogBundle\Entity\Author;
 use TechBlogBundle\Entity\Post;
@@ -11,6 +12,17 @@ class PostVoter extends Voter
 {
     const EDIT = 'edit';
     const DELETE = 'delete';
+
+    /**
+     * @var AccessDecisionManagerInterface
+     */
+    private $decisionManager;
+
+    public function __construct(AccessDecisionManagerInterface $decisionManager)
+    {
+
+        $this->decisionManager = $decisionManager;
+    }
 
     protected function supports($attribute, $subject)
     {
@@ -29,6 +41,11 @@ class PostVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
+        // ROLE_SUPER_ADMIN can do anything! The power!
+        if ($this->decisionManager->decide($token, ['ROLE_SUPER_ADMIN'])) {
+            return true;
+        }
+
         $author = $token->getUser();
 
         if (!$author instanceof Author) {

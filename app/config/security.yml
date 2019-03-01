@@ -25,5 +25,5 @@ security:
 #        - { path: ^/remove-post, roles: ROLE_USER }
 
     role_hierarchy:
-        ROLE_SUPERADMIN: [ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
         ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
