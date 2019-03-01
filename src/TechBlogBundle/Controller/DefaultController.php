@@ -131,6 +131,8 @@ class DefaultController extends Controller
 
     public function removePostAction(Post $post, EntityManagerInterface $em)
     {
+        $this->denyAccessUnlessGranted('edit', $post);
+
         $em->remove($post);
         $em->flush();
         $this->addFlash('notice', 'Post is Success Removed!');
@@ -140,6 +142,8 @@ class DefaultController extends Controller
 
     public function editPostAction(Post $post, Request $request, EntityManagerInterface $em)
     {
+        $this->denyAccessUnlessGranted('edit', $post);
+
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
