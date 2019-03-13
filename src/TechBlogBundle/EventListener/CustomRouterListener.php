@@ -47,6 +47,9 @@ class CustomRouterListener implements EventSubscriberInterface
             $url = $router->generate('tech_blog_homepage');
             $response = new RedirectResponse($url);
             $event->setResponse($response);
+
+            /* Stop another listeners */
+            $event->stopPropagation();
         }
     }
 

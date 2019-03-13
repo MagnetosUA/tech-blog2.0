@@ -22,7 +22,7 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'custom-menu');
-        $menu->setCurrent(true);
+//        $menu->setCurrent(true);
 
         $menu->addChild('Home', ['route' => 'tech_blog_homepage']);
 
@@ -34,7 +34,7 @@ class MenuBuilder
                 'route' => 'category',
                 'routeParameters' => ['slug' => 'ai']
             ]);
-        $menu->addChild('Mashine Learning', [
+        $menu->addChild('Machine Learning', [
                 'route' => 'category',
                 'routeParameters' => ['slug' => 'machine-learning']
             ]);
@@ -47,14 +47,6 @@ class MenuBuilder
                 'routeParameters' => ['slug' => 'algorithms']
             ]);
         ;
-
-
-//            ->addChild('Technology', ['route' => 'technology'])
-//            ->addChild('Design', ['route' => 'design'])
-//            ->addChild('Culture', ['route' => 'culture'])
-//            ->addChild('Business', ['route' => 'business'])
-//            ->addChild('Politics', ['route' => 'politics'])
-//            ->addChild('Science', ['route' => 'science']);
 
         return $menu;
     }
