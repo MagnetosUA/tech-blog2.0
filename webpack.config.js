@@ -13,6 +13,7 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .copyFiles({from: './assets/images', pattern: /\.(png|jpg|jpeg)$/, to: 'images/[name].[ext]'})
+    .autoProvidejQuery()
 ;
 
 // export the final configuration
