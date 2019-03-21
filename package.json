@@ -1,0 +1,25 @@
+{
+  "name": "tech-blog2.0",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MagnetosUA/tech-blog2.0",
+  "author": "Aleks Sushitskiy <magnetos.ua@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.7.2",
+    "@symfony/webpack-encore": "^0.24.0",
+    "bootstrap": "4",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "webpack-notifier": "^1.6.0"
+  },
+  "dependencies": {
+    "popper.js": "^1.14.7"
+  },
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production"
+  }
+}
